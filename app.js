@@ -105,7 +105,6 @@ fs.mkdir(path.join(__dirname, 'fatherDirectory'), (err => {
                         console.log(err);
                         throw err;
                     }
-                    checkDirectory('fatherDirectory');
                 }));
             }));
         }));
@@ -151,5 +150,7 @@ function checkDirectory(directory) {
         });
     }));
 }
+
+// checkDirectory('fatherDirectory');
 
 
