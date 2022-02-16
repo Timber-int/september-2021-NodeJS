@@ -8,19 +8,21 @@ const path = require('path');
 //     , в вас вийде невеликий callback hell, пізніше я вам покажу
 // як можна це обійти, але поки зробіть так
 
-// fs.writeFile(path.join(__dirname, 'someFile.txt'), 'Some data', (err => {
+// const pathToSomeFile = path.join(__dirname, 'someFile.txt');
+//
+// fs.writeFile(pathToSomeFile, 'Some data', (err => {
 //     if (err) {
 //         console.log(err);
 //         throw err;
 //     }
-//     fs.readFile(path.join(__dirname, 'someFile.txt'), 'utf-8', ((err, data) => {
+//     fs.readFile(pathToSomeFile, 'utf-8', ((err, data) => {
 //         if (err) {
 //             console.log(err);
 //             throw err;
 //         }
 //         console.log(data);
 //
-//         fs.writeFile(path.join(__dirname, 'someNewFile.txt'), `${data}`, (err => {
+//         fs.writeFile(pathToSomeFile, `${data}`, (err => {
 //             if (err) {
 //                 console.log(err);
 //                 throw err;
@@ -35,34 +37,38 @@ const path = require('path');
 //     старий файл видаліть після того як все завершиться.
 //     Також вийде callback hell
 
-// fs.writeFile(path.join(__dirname, 'secondFile'), 'Hello NodeJS', (err => {
+// const pathToSecondFile = path.join(__dirname, 'secondFile');
+// const pathToNewDirectoryThirdFile = path.join(__dirname, 'newDirectory', 'thirdFile');
+// const pathToNewDirectory = path.join(__dirname, 'newDirectory');
+//
+// fs.writeFile(pathToSecondFile, 'Hello NodeJS', (err => {
 //     if (err) {
 //         console.log(err);
 //         throw err;
 //     }
-//     fs.readFile(path.join(__dirname, 'secondFile'), 'utf-8', ((err, data) => {
+//     fs.readFile(pathToSecondFile, 'utf-8', ((err, data) => {
 //         if (err) {
 //             console.log(err);
 //             throw err;
 //         }
 //         console.log(data);
 //
-//         fs.mkdir(path.join(__dirname, 'newDirectory'), (err => {
+//         fs.mkdir(pathToNewDirectory, (err => {
 //             if (err) {
 //                 console.log(err);
 //                 throw err;
 //             }
-//             fs.writeFile(path.join(__dirname, 'newDirectory', 'thirdFile'), '', (err => {
+//             fs.writeFile(pathToNewDirectoryThirdFile, '', (err => {
 //                 if (err) {
 //                     console.log(err);
 //                     throw err;
 //                 }
-//                 fs.copyFile(path.join(__dirname, 'secondFile'), path.join(__dirname, 'newDirectory', 'thirdFile'), (err => {
+//                 fs.copyFile(pathToSecondFile, pathToNewDirectoryThirdFile, (err => {
 //                     if (err) {
 //                         console.log(err);
 //                         throw err;
 //                     }
-//                     fs.unlink(path.join(__dirname, 'secondFile'), (err => {
+//                     fs.unlink(pathToSecondFile, (err => {
 //                         if (err) {
 //                             console.log(err);
 //                             throw err;
@@ -80,39 +86,42 @@ const path = require('path');
 // потрібно їх очистити, але не видаляти, якщо дані - це папки,
 //     вам потрібно їх перейменувати і додати до назви префікс _new
 
-fs.mkdir(path.join(__dirname, 'fatherDirectory'), (err => {
-    if (err) {
-        console.log(err);
-        throw err;
-    }
-    fs.mkdir(path.join(__dirname, 'fatherDirectory', 'firstChildDirectory'), (err => {
-        if (err) {
-            console.log(err);
-            throw err;
-        }
-        fs.mkdir(path.join(__dirname, 'fatherDirectory', 'secondChildDirectory'), (err => {
-            if (err) {
-                console.log(err);
-                throw err;
-            }
-            fs.writeFile(path.join(__dirname, 'fatherDirectory', 'firstChildFile.txt'), 'Hello Word', (err => {
-                if (err) {
-                    console.log(err);
-                    throw err;
-                }
-                fs.writeFile(path.join(__dirname, 'fatherDirectory', 'secondChildFile.txt'), 'Buy Word', (err => {
-                    if (err) {
-                        console.log(err);
-                        throw err;
-                    }
-                }));
-            }));
-        }));
-    }));
-}));
+// const pathToFatherDirectoryFirstChildDirectory = path.join(__dirname, 'fatherDirectory', 'firstChildDirectory');
+// const pathToFatherDirectorySecondChildDirectory = path.join(__dirname, 'fatherDirectory', 'secondChildDirectory');
+//
+// fs.mkdir(path.join(__dirname, 'fatherDirectory'), (err => {
+//     if (err) {
+//         console.log(err);
+//         throw err;
+//     }
+//     fs.mkdir(pathToFatherDirectoryFirstChildDirectory, (err => {
+//         if (err) {
+//             console.log(err);
+//             throw err;
+//         }
+//         fs.mkdir(pathToFatherDirectorySecondChildDirectory, (err => {
+//             if (err) {
+//                 console.log(err);
+//                 throw err;
+//             }
+//             fs.writeFile(path.join(__dirname, 'fatherDirectory', 'firstChildFile.txt'), 'Hello Word', (err => {
+//                 if (err) {
+//                     console.log(err);
+//                     throw err;
+//                 }
+//                 fs.writeFile(path.join(__dirname, 'fatherDirectory', 'secondChildFile.txt'), 'Buy Word', (err => {
+//                     if (err) {
+//                         console.log(err);
+//                         throw err;
+//                     }
+//                 }));
+//             }));
+//         }));
+//     }));
+// }));
 
 function checkDirectory(directory) {
-    fs.readdir(path.join(__dirname, `${directory}`), ((err, files) => {
+    fs.readdir(path.join(__dirname, directory), ((err, files) => {
         if (err) {
             console.log(err);
             throw err;
@@ -121,7 +130,7 @@ function checkDirectory(directory) {
         console.log(files);
 
         files.forEach(file => {
-            fs.stat(directory + '/' + file, ((err1, stats) => {
+            fs.stat(path.join(directory, file), ((err1, stats) => {
                 if (err) {
                     console.log(err);
                     throw err;
@@ -129,7 +138,7 @@ function checkDirectory(directory) {
 
                 if (stats.isFile()) {
                     console.log(file, 'file');
-                    fs.truncate(path.join(__dirname, `${directory}`, `${file}`), (err => {
+                    fs.truncate(path.join(__dirname, directory, file), (err => {
                         if (err) {
                             console.log(err);
                             throw err;
@@ -138,8 +147,8 @@ function checkDirectory(directory) {
 
                 } else if (stats.isDirectory()) {
                     console.log(file, 'directory');
-                    fs.rename(path.join(__dirname, `${directory}`, `${file}`),
-                        path.join(__dirname, `${directory}`, `_new${file}`), (err => {
+                    fs.rename(path.join(__dirname, directory, file),
+                        path.join(__dirname, directory, `_new${file}`), (err => {
                             if (err) {
                                 console.log(err);
                                 throw err;
@@ -151,6 +160,6 @@ function checkDirectory(directory) {
     }));
 }
 
-// checkDirectory('fatherDirectory');
+checkDirectory('fatherDirectory');
 
 
