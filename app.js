@@ -32,6 +32,24 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/users', (req, res) => {
+
+    const {age, city} = req.query;
+
+    let filterUsers;
+
+    if (age) {
+        filterUsers = [...users].filter(user => user.age === age);
+    } else if (city) {
+        filterUsers = [...users].filter(user => user.city.trim().toLowerCase() === city.trim().toLowerCase());
+    } else {
+        filterUsers = [...users].filter(user => user.age === age && user.city.trim().toLowerCase() === city.trim().toLowerCase());
+    }
+
+    if (filterUsers.length) {
+        res.render('users', {users: filterUsers});
+        return;
+    }
+
     res.render('users', {users});
 });
 
@@ -50,7 +68,7 @@ app.get('/users/:index', (req, res) => {
 });
 
 app.get('/errorPage', (req, res) => {
-    res.render('errorPage',{errors});
+    res.render('errorPage', {errors});
 });
 
 app.post('/login', (req, res) => {
