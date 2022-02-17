@@ -56,7 +56,7 @@ app.get('/users', (req, res) => {
 app.get('/users/:index', (req, res) => {
     const {index} = req.params;
 
-    const user = users.find(user => user[user] === index);
+    const user = users.find(user => users.indexOf(user).toString() === index);
 
     if (!user) {
         errors = 'Not user for this index!!!';
