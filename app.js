@@ -1,17 +1,9 @@
 const express = require('express');
 const path = require('path');
 const {engine} = require('express-handlebars');
+const uuid = require('uuid');
 
-const users = [
-    {
-        firstName: 'Jon',
-        lastName: 'Conor',
-        email: 'Jon@gmail.com',
-        password: '12121212',
-        age: 22,
-        city: 'New York',
-    },
-];
+let users = [];
 
 let errors = '';
 
@@ -29,6 +21,18 @@ const PORT = 5000;
 
 app.get('/login', (req, res) => {
     res.render('login');
+});
+
+app.get('/signIn', (req, res) => {
+    res.render('signIn');
+});
+
+app.get('/delete/:id', (req, res) => {
+    const {id} = req.params;
+
+    users = users.filter(user => user.id !== id);
+
+    res.redirect('/users');
 });
 
 app.get('/users', (req, res) => {
@@ -56,7 +60,7 @@ app.get('/users', (req, res) => {
 app.get('/users/:index', (req, res) => {
     const {index} = req.params;
 
-    const user = users.find(user => users.indexOf(user).toString() === index);
+    const user = users.find(user => user.id === index);
 
     if (!user) {
         errors = 'Not user for this index!!!';
@@ -81,8 +85,24 @@ app.post('/login', (req, res) => {
         return;
     }
 
-    users.push(req.body);
+    users.push({...req.body, id: uuid.v4()});
+
     res.redirect('/users');
+});
+
+app.post('/registration', (req, res) => {
+
+    const {email, password} = req.body;
+
+    const findUser = [...users].filter(user=> email && password && user.email === email && user.password === password);
+
+    if (findUser.length) {
+        res.redirect(`/users/${findUser[0].id}`);
+        return;
+    }
+
+    errors = 'Wrong email or password!!!';
+    res.redirect('/errorPage');
 });
 
 app.use((req, res) => {
