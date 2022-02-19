@@ -43,6 +43,7 @@ class UsersMiddlewares {
             res.status(404).send(e.message);
         }
     };
+
 }
 
 module.exports = new UsersMiddlewares;

@@ -8,6 +8,12 @@ const signInMiddlewares = require('../middlewares/signIn.middlewares');
 const loginRouter = Router();
 
 loginRouter.get('/', loginController.loginPage);
-loginRouter.post('/', loginMiddlewares.isEmailExist, signInMiddlewares.checkIsPasswordAndEmailValid, loginController.loginPassed);
+loginRouter.post(
+    '/',
+    loginMiddlewares.checkIsUserBodyValid,
+    loginMiddlewares.isEmailExist,
+    signInMiddlewares.checkIsPasswordAndEmailValid,
+    loginController.loginPassed
+);
 
 module.exports = loginRouter;
