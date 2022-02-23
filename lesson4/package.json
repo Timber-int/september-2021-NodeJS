@@ -4,7 +4,9 @@
   "description": "",
   "main": "src/app.ts",
   "scripts": {
-    "start": "rimraf dist && tsc-watch --onSuccess \"nodemon ./src/app.ts\""
+    "start": "rimraf dist && tsc-watch --onSuccess \"nodemon ./src/app.ts\"",
+    "lint": "eslint --cache --ext .js,.ts src",
+    "lint:fix": "npm run lint -- --fix"
   },
   "author": "",
   "license": "ISC",
@@ -17,13 +19,12 @@
     "@types/node": "^17.0.19",
     "@typescript-eslint/eslint-plugin": "^5.12.1",
     "@typescript-eslint/parser": "^5.12.1",
-    "eslint": "^5.16.0",
+    "eslint": "^8.9.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.4",
     "nodemon": "^2.0.15",
     "rimraf": "^3.0.2",
     "ts-node": "^10.5.0",
-    "tsc-watch": "^4.6.0",
-    "eslint-plugin-react": "^7.28.0"
+    "tsc-watch": "^4.6.0"
   }
 }
