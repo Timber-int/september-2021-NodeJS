@@ -1,8 +1,10 @@
 import express, { Request, Response } from 'express';
+import { users } from './users';
 
 const app = express();
 
 app.use('/', (req: Request, res: Response) => {
+    console.log(users);
     res.end();
 });
 
