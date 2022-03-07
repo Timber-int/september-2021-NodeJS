@@ -1,9 +1,9 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class CreateTablePosts1645635393002 implements MigrationInterface {
+export class CreateTableComments1646642624788 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(new Table({
-            name: 'Posts',
+            name: 'Comments',
             columns: [
                 {
                     name: 'id',
@@ -13,21 +13,28 @@ export class CreateTablePosts1645635393002 implements MigrationInterface {
                     generationStrategy: 'increment',
                 },
                 {
-                    name: 'title',
-                    type: 'varchar',
-                    width: 250,
-                    isUnique: true,
-                    isNullable: false,
-                },
-                {
                     name: 'text',
                     type: 'varchar',
                     width: 250,
                     isNullable: false,
                 },
                 {
-                    name: 'userId',
+                    name: 'authorId',
                     type: 'int',
+                },
+                {
+                    name: 'postId',
+                    type: 'int',
+                },
+                {
+                    name: 'like',
+                    type: 'int',
+                    default: 0,
+                },
+                {
+                    name: 'dislike',
+                    type: 'int',
+                    default: 0,
                 },
                 {
                     name: 'createdAt',
@@ -45,17 +52,24 @@ export class CreateTablePosts1645635393002 implements MigrationInterface {
             ],
             foreignKeys: [
                 {
-                    columnNames: ['userId'],
+                    columnNames: ['authorId'],
                     referencedTableName: 'Users',
                     referencedColumnNames: ['id'],
                     onUpdate: 'CASCADE',
                     onDelete: 'CASCADE',
                 },
+                {
+                    columnNames: ['postId'],
+                    referencedTableName: 'Posts',
+                    referencedColumnNames: ['id'],
+                    onUpdate: 'CASCADE',
+                    onDelete: 'CASCADE',
+                },
             ],
-        }), true);
+        }));
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable('Posts');
+        await queryRunner.dropTable('Comments');
     }
 }
