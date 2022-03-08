@@ -7,7 +7,7 @@ router.get('/', userController.getAllUsers);
 // router.get('/:id', userController.getUserById);
 router.get('/:email', userController.getUserByEmail);
 router.post('/', userController.createUser);
-router.patch('/:id', userController.updateById);
+router.put('/:id', userController.updateById);
 router.delete('/:id', userController.deleteById);
 
 export const userRouter = router;

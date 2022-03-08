@@ -34,7 +34,7 @@ class UserRepository extends Repository<User> implements IUserRepository {
             .delete(id);
     }
 
-    public async updateById(id: number, data: IUser): Promise<IUser | void> {
+    public async updateById(id: number, data: IUser): Promise<any> {
         const { email, password, phone } = data;
         return getManager().getRepository(User)
             .createQueryBuilder('user')

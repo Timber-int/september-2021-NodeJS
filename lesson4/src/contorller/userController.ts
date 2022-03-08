@@ -45,12 +45,11 @@ class UserController {
         }
     }
 
-    public async updateById(req: Request, res: Response): Promise<Response<IUser>> {
+    public async updateById(req: Request, res: Response): Promise<any> {
         try {
             const { id } = req.params;
-
-            const user = await userService.updateById(Number(id), req.body);
-            return res.status(200).json(user);
+            await userService.updateById(Number(id), req.body);
+            return 'User updated';
         } catch (e) {
             return res.send(e);
         }
