@@ -9,7 +9,7 @@ app.use(express.urlencoded());
 
 app.use(apiRouter);
 
-const PORT = 5500;
+const { PORT } = process.env;
 
 app.listen(PORT, async () => {
     console.log(`Server has been started on ${PORT} port...`);
