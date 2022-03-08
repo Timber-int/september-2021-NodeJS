@@ -2,18 +2,18 @@ import {
     Column, Entity, JoinColumn, ManyToOne, OneToMany,
 } from 'typeorm';
 import { CommonFields } from './commonFields';
-import { Users } from './users';
-import { Comments, IComments } from './comments';
+import { User } from './user';
+import { Comment, IComment } from './comment';
 
-export interface IPosts {
+export interface IPost {
     title:string,
     text:string,
     userId:number,
-    comments: IComments[];
+    comments: IComment[];
 }
 
 @Entity('posts', { database: 'okten' })
-export class Posts extends CommonFields implements IPosts {
+export class Post extends CommonFields implements IPost {
     @Column({
         type: 'varchar',
         width: 250,
@@ -34,10 +34,10 @@ export class Posts extends CommonFields implements IPosts {
     })
         userId: number;
 
-    @ManyToOne(() => Users, (user) => user.posts)
+    @ManyToOne(() => User, (user) => user.posts)
     @JoinColumn({ name: 'userId' })
-        user:Users;
+        user:User;
 
-    @OneToMany(() => Comments, (comment) => comment.post)
-        comments:Comments[];
+    @OneToMany(() => Comment, (comment) => comment.post)
+        comments:Comment[];
 }

@@ -1,7 +1,7 @@
 import {
     Column, Entity, JoinColumn, OneToOne,
 } from 'typeorm';
-import { Users } from './users';
+import { User } from './user';
 import { CommonFields } from './commonFields';
 
 export interface IToken {
@@ -23,7 +23,7 @@ export class Token extends CommonFields implements IToken {
     })
         userId: number;
 
-   @OneToOne(() => Users)
+   @OneToOne(() => User)
     @JoinColumn({ name: 'userId' })
-       user:Users;
+       user:User;
 }

@@ -2,10 +2,10 @@ import {
     Column, Entity, JoinColumn, ManyToOne,
 } from 'typeorm';
 import { CommonFields } from './commonFields';
-import { Users } from './users';
-import { Posts } from './posts';
+import { User } from './user';
+import { Post } from './post';
 
-export interface IComments {
+export interface IComment {
     text: string,
     authorId: number,
     postId: number,
@@ -14,7 +14,7 @@ export interface IComments {
 }
 
 @Entity('comments', { database: 'okten' })
-export class Comments extends CommonFields implements IComments {
+export class Comment extends CommonFields implements IComment {
     @Column({
         type: 'varchar',
         width: 250,
@@ -44,11 +44,11 @@ export class Comments extends CommonFields implements IComments {
     })
         dislike:number;
 
-    @ManyToOne(() => Users, (user) => user.comments)
+    @ManyToOne(() => User, (user) => user.comments)
     @JoinColumn({ name: 'authorId' })
-        user:Users[];
+        user:User[];
 
-    @ManyToOne(() => Posts, (post) => post.comments)
+    @ManyToOne(() => Post, (post) => post.comments)
     @JoinColumn({ name: 'postId' })
-        post: Posts;
+        post: Post;
 }
