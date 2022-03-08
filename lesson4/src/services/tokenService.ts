@@ -16,7 +16,7 @@ class TokenService {
     }
 
     public async saveToken(userId:number, refreshToken:string):Promise<IToken> {
-        const tokenFromDb = tokenRepository.findTokenByUserId(userId);
+        const tokenFromDb = await tokenRepository.findTokenByUserId(userId);
 
         if (tokenFromDb) {
             tokenFromDb.refreshToken = refreshToken;
