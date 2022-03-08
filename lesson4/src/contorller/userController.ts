@@ -49,9 +49,7 @@ class UserController {
         try {
             const { id } = req.params;
 
-            const { email, password, phone } = req.body;
-
-            const user = await userService.updateById(Number(id), {email, password, phone});
+            const user = await userService.updateById(Number(id), req.body);
             return res.status(200).json(user);
         } catch (e) {
             return res.send(e);

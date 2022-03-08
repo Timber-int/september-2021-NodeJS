@@ -32,8 +32,8 @@ class UserService {
         return user;
     }
 
-    public async updateById(id:number, data:object):Promise<IUser | void> {
-       const user = await userRepositories.updateById(id, data);
+    public async updateById(id:number, data:IUser):Promise<IUser | void> {
+        const user = await userRepositories.updateById(id, data);
         return user;
     }
 

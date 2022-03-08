@@ -1,6 +1,6 @@
-import {EntityRepository, getManager, Repository} from 'typeorm';
-import {IUser, User} from '../../entity/user';
-import {IUserRepository} from './userRepository.interfaces';
+import { EntityRepository, getManager, Repository } from 'typeorm';
+import { IUser, User } from '../../entity/user';
+import { IUserRepository } from './userRepository.interfaces';
 
 @EntityRepository(User)
 class UserRepository extends Repository<User> implements IUserRepository {
@@ -11,7 +11,7 @@ class UserRepository extends Repository<User> implements IUserRepository {
     public async getUserByEmail(email: string): Promise<IUser | undefined> {
         return getManager().getRepository(User)
             .createQueryBuilder('user')
-            .where('user.email = :email', {email})
+            .where('user.email = :email', { email })
             .andWhere('user.deletedAt IS NULL')
             .getOne();
     }
@@ -25,7 +25,7 @@ class UserRepository extends Repository<User> implements IUserRepository {
     public async getUserById(id: number): Promise<IUser | undefined> {
         return getManager().getRepository(User)
             .createQueryBuilder('user')
-            .where('user.id = :id', {id})
+            .where('user.id = :id', { id })
             .getOne();
     }
 
@@ -34,12 +34,11 @@ class UserRepository extends Repository<User> implements IUserRepository {
             .delete(id);
     }
 
-    public async updateById(id: number, data: object): Promise<IUser | void> {
-        const {email, password, phone} = data;
+    public async updateById(id: number, data: IUser): Promise<IUser | void> {
+        const { email, password, phone } = data;
         return getManager().getRepository(User)
             .createQueryBuilder('user')
-            .update({id},{email,phone,password})
-
+            .update({ id }, { email, phone, password });
     }
 }
 
