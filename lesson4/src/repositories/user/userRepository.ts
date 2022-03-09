@@ -31,13 +31,12 @@ class UserRepository extends Repository<User> implements IUserRepository {
 
     public async deleteById(id: number): Promise<any> {
         return getManager().getRepository(User)
-            .delete(id);
+            .softDelete(id);
     }
 
-    public async updateById(id: number, data: IUser): Promise<any> {
+    public async updateById(id: number, data: IUser): Promise<object> {
         const { email, password, phone } = data;
         return getManager().getRepository(User)
-            .createQueryBuilder('user')
             .update({ id }, { email, phone, password });
     }
 }

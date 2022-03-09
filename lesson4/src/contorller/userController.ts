@@ -35,21 +35,21 @@ class UserController {
         }
     }
 
-    public async deleteById(req: Request, res: Response): Promise<Response<IUser>> {
+    public async deleteById(req: Request, res: Response): Promise<Response<object>> {
         try {
             const { id } = req.params;
-            const user = await userService.deleteById(Number(id));
-            return res.status(200).json(user);
+            await userService.deleteById(Number(id));
+            return res.status(200).json('User deleted successfully');
         } catch (e) {
             return res.send(e);
         }
     }
 
-    public async updateById(req: Request, res: Response): Promise<any> {
+    public async updateById(req: Request, res: Response): Promise<object> {
         try {
             const { id } = req.params;
             await userService.updateById(Number(id), req.body);
-            return 'User updated';
+            return res.json('User updated successfully');
         } catch (e) {
             return res.send(e);
         }
