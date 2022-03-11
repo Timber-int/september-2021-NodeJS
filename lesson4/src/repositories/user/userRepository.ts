@@ -29,7 +29,7 @@ class UserRepository extends Repository<User> implements IUserRepository {
             .getOne();
     }
 
-    public async deleteById(id: number): Promise<any> {
+    public async deleteById(id: number): Promise<object> {
         return getManager().getRepository(User)
             .softDelete(id);
     }

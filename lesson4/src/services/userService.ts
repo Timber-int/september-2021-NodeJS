@@ -27,7 +27,7 @@ class UserService {
         return user;
     }
 
-    public async deleteById(id:number):Promise<IUser | void> {
+    public async deleteById(id:number):Promise<object> {
         const user = await userRepositories.deleteById(id);
         return user;
     }

@@ -2,10 +2,11 @@ import jwt from 'jsonwebtoken';
 import { config } from '../config/config';
 import { IToken } from '../entity/token';
 import { tokenRepository } from '../repositories/token/tokenRepository';
+import { ITokenPair, IUserPayload } from '../interfaces/token.interface';
 
 class TokenService {
-    public async generateTokenPair(payload:any)
-        :Promise<{accessToken:string, refreshToken:string}> {
+    public async generateTokenPair(payload:IUserPayload)
+        :Promise<ITokenPair> {
         const accessToken = jwt.sign(payload, config.SECRET_ACCESS_KEY as string, { expiresIn: '15m' });
         const refreshToken = jwt.sign(payload, config.SECRET_REFRESH_KEY as string, { expiresIn: '1d' });
 
