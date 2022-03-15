@@ -1,5 +1,5 @@
-import { ITokenDataToSave } from '../../interfaces/token.interface';
-import { IToken } from '../../entity/token';
+import { IToken } from '../../entity';
+import { ITokenDataToSave } from '../../interfaces';
 
 export interface ITokenRepository {
     createToken(token:ITokenDataToSave):Promise<IToken>

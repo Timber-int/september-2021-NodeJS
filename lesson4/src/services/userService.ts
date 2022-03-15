@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
-import { IUser } from '../entity/user';
-import { userRepositories } from '../repositories/user/userRepository';
+import { IUser } from '../entity';
+import { userRepositories } from '../repositories';
 
 class UserService {
     public async createUser(user:IUser):Promise<IUser> {

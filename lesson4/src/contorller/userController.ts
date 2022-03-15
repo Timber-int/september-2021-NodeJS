@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { IUser } from '../entity/user';
-import { userService } from '../services/userService';
+import { IUser } from '../entity';
+import { userService } from '../services';
 
 class UserController {
     public async createUser(req: Request, res: Response): Promise<Response<IUser>> {
@@ -18,7 +18,7 @@ class UserController {
     public async getAllUsers(req: Request, res: Response): Promise<Response<IUser[]>> {
         try {
             const users = await userService.getAllUsers();
-            return res.status(200).json(users);
+            return res.json(users);
         } catch (e) {
             return res.send(e);
         }
@@ -29,7 +29,7 @@ class UserController {
             const { id } = req.params;
 
             const user = await userService.getUserById(Number(id));
-            return res.status(200).json(user);
+            return res.json(user);
         } catch (e) {
             return res.send(e);
         }
@@ -39,7 +39,7 @@ class UserController {
         try {
             const { id } = req.params;
             await userService.deleteById(Number(id));
-            return res.status(200).json('User deleted successfully');
+            return res.json('User deleted successfully');
         } catch (e) {
             return res.send(e);
         }
@@ -49,7 +49,7 @@ class UserController {
         try {
             const { id } = req.params;
             await userService.updateById(Number(id), req.body);
-            return res.json('User updated successfully');
+            return res.status(201).json('User updated successfully');
         } catch (e) {
             return res.send(e);
         }
