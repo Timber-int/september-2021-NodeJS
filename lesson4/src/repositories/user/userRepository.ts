@@ -6,39 +6,51 @@ import { IUserRepository } from './userRepository.interfaces';
 @EntityRepository(User)
 class UserRepository extends Repository<User> implements IUserRepository {
     public async createUser(user: IUser): Promise<IUser> {
-        return getManager().getRepository(User).save(user);
+        return getManager()
+            .getRepository(User)
+            .save(user);
     }
 
     public async getUserByEmail(email: string): Promise<IUser | undefined> {
-        return getManager().getRepository(User)
-            .createQueryBuilder('user')
-            .where('user.email = :email', { email })
-            .andWhere('user.deletedAt IS NULL')
-            .getOne();
+        return getManager()
+            .getRepository(User)
+            .findOne(
+                { email },
+                { relations: ['posts', 'comments'], where: { deletedAt: null } },
+            );
     }
 
     public async getAllUsers(): Promise<IUser[]> {
-        return getManager().getRepository(User)
-            .createQueryBuilder('users')
-            .getMany();
+        return getManager()
+            .getRepository(User)
+            .find({ relations: ['posts', 'comments'] });
     }
 
     public async getUserById(id: number): Promise<IUser | undefined> {
-        return getManager().getRepository(User)
-            .createQueryBuilder('user')
-            .where('user.id = :id', { id })
-            .getOne();
+        return getManager()
+            .getRepository(User)
+            .findOne({ id }, { relations: ['posts', 'comments'] });
     }
 
     public async deleteById(id: number): Promise<object> {
-        return getManager().getRepository(User)
+        return getManager()
+            .getRepository(User)
             .softDelete(id);
     }
 
     public async updateById(id: number, data: IUser): Promise<object> {
-        const { email, password, phone } = data;
-        return getManager().getRepository(User)
-            .update({ id }, { email, phone, password });
+        const {
+            email,
+            password,
+            phone,
+        } = data;
+        return getManager()
+            .getRepository(User)
+            .update({ id }, {
+                email,
+                phone,
+                password,
+            });
     }
 }
 
