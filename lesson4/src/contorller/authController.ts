@@ -1,9 +1,8 @@
 import { Request, Response } from 'express';
 import { COOKIE } from '../constants';
-import { IRequestExtended, ITokenData } from '../interfaces';
+import { IRequestExtended, ITokenData, IUsersDataWithTokensToReturn } from '../interfaces';
 import { authService, tokenService, userService } from '../services';
 import { IUser } from '../entity';
-import { tokenRepository } from '../repositories';
 
 class AuthController {
     public async registration(req: Request, res: Response): Promise<Response<ITokenData>> {
@@ -20,7 +19,7 @@ class AuthController {
         return res.json(data);
     }
 
-    public async login(req: IRequestExtended, res: Response) {
+    public async login(req: IRequestExtended, res: Response):Promise<Response<IUsersDataWithTokensToReturn>> {
         try {
             const { id, email, password: hashPassword } = req.user as IUser;
 
@@ -35,15 +34,14 @@ class AuthController {
 
             const { accessToken, refreshToken } = tokenPair;
 
-            await tokenRepository.saveTokensToDB({ refreshToken, accessToken, userId: Number(id) });
+            await tokenService.saveToken(id, refreshToken, accessToken);
 
-            res.json({
+           return  res.json({
                 refreshToken,
                 accessToken,
                 user: req.user,
             });
 
-            return res.json('OK');
         } catch (e:any) {
             return res.status(400)
                 .json(e.message);
@@ -57,7 +55,7 @@ class AuthController {
 
         await tokenService.deleteUserTokenPair(id);
 
-        return res.json('OK');
+        return res.json('We will be waiting for you later');
     }
 }
 

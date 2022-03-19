@@ -17,6 +17,11 @@ class TokenRepository extends Repository<Token>implements ITokenRepository {
     public async deleteUserTokenPair(userId:number):Promise<object> {
         return getManager().getRepository(Token).delete({ userId });
     }
+
+    public async findAccessToken(accessToken:string):Promise<IToken | undefined> {
+        return getManager().getRepository(Token).findOne({ accessToken });
+    }
+
 }
 
 export const tokenRepository = new TokenRepository();

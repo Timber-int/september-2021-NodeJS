@@ -1,10 +1,13 @@
+import { IUser } from '../entity';
+
 export interface ITokenDataToSave {
-    refreshToken: string;
-    accessToken: string;
-    userId: number;
+    refreshToken: string,
+    accessToken: string,
+    userId: number,
 }
+
 export interface ITokenPair {
-    accessToken: string;
+    accessToken: string,
     refreshToken: string;
 }
 
@@ -14,8 +17,14 @@ export interface IUserPayload {
 }
 
 export interface ITokenData {
-    accessToken: string;
-    refreshToken: string;
+    accessToken: string,
+    refreshToken: string,
     userId: number,
     userEmail: string,
+}
+
+export interface IUsersDataWithTokensToReturn {
+    accessToken: string,
+    refreshToken: string,
+    user: IUser,
 }

@@ -1,17 +1,24 @@
 import { NextFunction, Response } from 'express';
 import { tokenService, userService } from '../services';
 import { IRequestExtended } from '../interfaces';
+import { tokenRepository } from '../repositories';
 
 class AuthMiddleware {
-    public async checkAccessToken(req:IRequestExtended, res:Response, next:NextFunction) {
+    public async checkAccessToken(req: IRequestExtended, res: Response, next: NextFunction) {
         try {
-            const authToken = req.get('Authorization');
+            const accessToken = req.get('Authorization');
 
-            if (!authToken) {
+            if (!accessToken) {
                 throw new Error('Not token');
             }
 
-            const { userEmail } = await tokenService.verifyToken(authToken);
+            const { userEmail } = await tokenService.verifyToken(accessToken);
+
+            const tokenPairFromDB = await tokenRepository.findAccessToken( accessToken );
+
+            if (!tokenPairFromDB) {
+                throw new Error('Token not valid');
+            }
 
             const userFromToken = await userService.getUserByEmail(userEmail);
 
@@ -22,7 +29,7 @@ class AuthMiddleware {
             req.user = userFromToken;
 
             next();
-        } catch (e:any) {
+        } catch (e: any) {
             res.json({
                 status: 400,
                 message: e.message,
