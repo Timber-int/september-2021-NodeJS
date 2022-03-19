@@ -6,7 +6,7 @@ import { ITokenRepository } from './tokenRepository.interfaces';
 
 EntityRepository(Token);
 class TokenRepository extends Repository<Token>implements ITokenRepository {
-    public async createToken(token:ITokenDataToSave):Promise<IToken> {
+    public async saveTokensToDB(token:ITokenDataToSave):Promise<IToken> {
         return getManager().getRepository(Token).save(token);
     }
 

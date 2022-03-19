@@ -2,10 +2,11 @@ import {
     Column, Entity, JoinColumn, OneToOne,
 } from 'typeorm';
 import { User } from './user';
-import { CommonFields } from './commonFields';
+import { CommonFields, ICommonFields } from './commonFields';
 
-export interface IToken {
+export interface IToken extends ICommonFields{
     refreshToken:string,
+    accessToken:string,
     userId:number
 }
 
@@ -17,6 +18,13 @@ export class Token extends CommonFields implements IToken {
         nullable: false,
     })
         refreshToken:string;
+
+    @Column({
+        type: 'varchar',
+        width: 250,
+        nullable: false,
+    })
+        accessToken:string;
 
     @Column({
         type: 'int',

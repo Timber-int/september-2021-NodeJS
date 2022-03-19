@@ -40,6 +40,15 @@ class UserService {
         return user;
     }
 
+    public async compareUserPassword(password:string, passwordWithHash:string)
+        :Promise<void | Error> {
+        const isPasswordUnique = await bcrypt.compare(password, passwordWithHash);
+
+        if (!isPasswordUnique) {
+            throw new Error('User not exists');
+        }
+    }
+
     private async _hashPassword(password:string):Promise<string> {
         return bcrypt.hash(password, 10);
     }

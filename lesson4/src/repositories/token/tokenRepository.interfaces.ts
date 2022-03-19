@@ -2,6 +2,7 @@ import { IToken } from '../../entity';
 import { ITokenDataToSave } from '../../interfaces';
 
 export interface ITokenRepository {
-    createToken(token:ITokenDataToSave):Promise<IToken>
+    saveTokensToDB(token:ITokenDataToSave):Promise<IToken>
     findTokenByUserId(userId:number):Promise<IToken | undefined>
+    deleteUserTokenPair(userId:number):Promise<object>
 }

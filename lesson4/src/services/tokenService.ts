@@ -6,8 +6,8 @@ import { tokenRepository } from '../repositories';
 import { TokenType } from '../constants';
 
 class TokenService {
-    public async generateTokenPair(payload: IUserPayload)
-        : Promise<ITokenPair> {
+    public generateTokenPair(payload: IUserPayload)
+        : ITokenPair {
         const accessToken = jwt.sign(
             payload,
             config.SECRET_ACCESS_KEY as string,
@@ -25,15 +25,18 @@ class TokenService {
         };
     }
 
-    public async saveToken(userId: number, refreshToken: string): Promise<IToken> {
+    public async saveToken(userId: number, refreshToken: string, accessToken:string)
+        : Promise<IToken> {
         const tokenFromDb = await tokenRepository.findTokenByUserId(userId);
 
         if (tokenFromDb) {
             tokenFromDb.refreshToken = refreshToken;
-            return tokenRepository.createToken(tokenFromDb);
+            tokenFromDb.accessToken = accessToken;
+            return tokenRepository.saveTokensToDB(tokenFromDb);
         }
 
-        const token = await tokenRepository.createToken({
+        const token = await tokenRepository.saveTokensToDB({
+            accessToken,
             refreshToken,
             userId,
         });
