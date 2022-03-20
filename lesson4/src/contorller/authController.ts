@@ -57,6 +57,33 @@ class AuthController {
 
         return res.json('We will be waiting for you later');
     }
+
+    public async refresh(req:IRequestExtended, res:Response)
+        :Promise<Response<IUsersDataWithTokensToReturn>> {
+        try {
+            const user = req.user as IUser;
+
+            const { id, email } = user;
+
+            const tokenPair = await tokenService.generateTokenPair({
+                userId: id,
+                userEmail: email,
+            });
+
+            const { accessToken, refreshToken } = tokenPair;
+
+            await tokenService.saveToken(id, refreshToken, accessToken);
+
+            return res.json({
+                refreshToken,
+                accessToken,
+                user: req.user,
+            });
+        } catch (e:any) {
+            return res.status(400)
+                .json(e.message);
+        }
+    }
 }
 
 export const authController = new AuthController();

@@ -47,7 +47,7 @@ class TokenService {
         return tokenRepository.deleteUserTokenPair(userId);
     }
 
-    public async verifyToken(authToken: string, tokenType = TokenType.ACCESS)
+    public async verifyToken(authToken: string, tokenType:string)
         :Promise<IUserPayload> {
         let secretWord = config.SECRET_ACCESS_KEY;
 
