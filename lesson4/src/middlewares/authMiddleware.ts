@@ -14,7 +14,7 @@ class AuthMiddleware {
 
             const { userEmail } = await tokenService.verifyToken(accessToken);
 
-            const tokenPairFromDB = await tokenRepository.findAccessToken( accessToken );
+            const tokenPairFromDB = await tokenRepository.findAccessToken(accessToken);
 
             if (!tokenPairFromDB) {
                 throw new Error('Token not valid');

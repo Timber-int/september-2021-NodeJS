@@ -19,7 +19,8 @@ class AuthController {
         return res.json(data);
     }
 
-    public async login(req: IRequestExtended, res: Response):Promise<Response<IUsersDataWithTokensToReturn>> {
+    public async login(req: IRequestExtended, res: Response)
+        :Promise<Response<IUsersDataWithTokensToReturn>> {
         try {
             const { id, email, password: hashPassword } = req.user as IUser;
 
@@ -36,12 +37,11 @@ class AuthController {
 
             await tokenService.saveToken(id, refreshToken, accessToken);
 
-           return  res.json({
+            return res.json({
                 refreshToken,
                 accessToken,
                 user: req.user,
             });
-
         } catch (e:any) {
             return res.status(400)
                 .json(e.message);
