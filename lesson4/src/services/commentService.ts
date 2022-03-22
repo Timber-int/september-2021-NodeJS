@@ -2,6 +2,11 @@ import { commentRepository } from '../repositories';
 import { IComment } from '../entity';
 
 class CommentService {
+    public async createComment(body: Partial<IComment>):Promise<IComment> {
+        const comment = await commentRepository.createComment(body);
+        return comment;
+    }
+
     public async getAllComments():Promise<IComment[]> {
         const comments = await commentRepository.getAllComments();
         return comments;

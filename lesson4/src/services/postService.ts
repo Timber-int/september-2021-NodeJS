@@ -12,6 +12,11 @@ class PostService {
         return post;
     }
 
+    public async getPostById(id: number):Promise<IPost| undefined> {
+        const post = await postRepository.getPostById(id);
+        return post;
+    }
+
     public async postByUserId(userId:number):Promise<IPost| undefined> {
         const post = await postRepository.postByUserId(userId);
         return post;

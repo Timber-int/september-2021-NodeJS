@@ -19,6 +19,11 @@ class PostRepository extends Repository<Post> implements IPostRepository {
         return post;
     }
 
+    public async getPostById(id:number):Promise<IPost | undefined> {
+        const post = await getManager().getRepository(Post).findOne({ id });
+        return post;
+    }
+
     public async fiendPostByTitle(title: Partial<IPost>): Promise<IPost | undefined> {
         const post = await getManager()
             .getRepository(Post)

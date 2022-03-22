@@ -4,6 +4,11 @@ import { ICommentRepository } from './commentRepository.interfaces';
 
 EntityRepository(Comment);
 class CommentRepository extends Repository<Comment> implements ICommentRepository {
+    public async createComment(body:Partial<IComment>):Promise<IComment> {
+        const comment = await getManager().getRepository(Comment).save(body);
+        return comment;
+    }
+
     public async getAllComments():Promise<IComment[]> {
         const comments = await getManager().getRepository(Comment).find();
         return comments;

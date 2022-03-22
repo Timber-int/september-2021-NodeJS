@@ -28,7 +28,6 @@ class PostController {
     }
 
     public async updatePostById(req: Request, res: Response): Promise<Response<object>> {
-
         const { id } = req.params;
 
         const {

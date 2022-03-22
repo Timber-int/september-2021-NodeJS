@@ -3,6 +3,11 @@ import { IComment } from '../entity';
 import { commentService } from '../services';
 
 class CommentController {
+    public async createComment(req: Request, res: Response): Promise<Response<IComment>> {
+        const comment = await commentService.createComment(req.body);
+        return res.json(comment);
+    }
+
     public async getAllComments(req: Request, res: Response): Promise<Response<IComment[]>> {
         const comments = await commentService.getAllComments();
         return res.json(comments);
