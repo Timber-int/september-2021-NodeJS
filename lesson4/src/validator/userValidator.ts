@@ -31,15 +31,24 @@ export const userBodyForRegistrationValidator = Joi.object({
         }),
     phone: Joi.string()
         .required()
-        .regex(CONSTANTS.PHONE_REGEXP),
+        .regex(CONSTANTS.PHONE_REGEXP)
+        .messages({
+            'string.pattern.base': 'Phone not valid',
+        }),
     email: Joi.string()
         .regex(CONSTANTS.EMAIL_REGEXP)
         .required()
-        .trim(),
+        .trim()
+        .messages({
+            'string.pattern.base': 'Email not valid',
+        }),
     password: Joi.string()
         .regex(CONSTANTS.PASSWORD_REGEXP)
         .required()
-        .trim(),
+        .trim()
+        .messages({
+            'string.pattern.base': 'Password not valid',
+        }),
 
 });
 
@@ -47,23 +56,38 @@ export const loginDataValidator = Joi.object({
     email: Joi.string()
         .regex(CONSTANTS.EMAIL_REGEXP)
         .required()
-        .trim(),
+        .trim()
+        .messages({
+            'string.pattern.base': 'Email not valid',
+        }),
     password: Joi.string()
         .regex(CONSTANTS.PASSWORD_REGEXP)
         .required()
-        .trim(),
+        .trim()
+        .messages({
+            'string.pattern.base': 'Password not valid',
+        }),
 });
 
 export const userDataForUpdateValidator = Joi.object({
+    phone: Joi.string()
+        .required()
+        .regex(CONSTANTS.PHONE_REGEXP)
+        .messages({
+            'string.pattern.base': 'Phone not valid',
+        }),
     email: Joi.string()
         .regex(CONSTANTS.EMAIL_REGEXP)
         .required()
-        .trim(),
+        .trim()
+        .messages({
+            'string.pattern.base': 'Email not valid',
+        }),
     password: Joi.string()
         .regex(CONSTANTS.PASSWORD_REGEXP)
         .required()
-        .trim(),
-    phone: Joi.string()
-        .required()
-        .regex(CONSTANTS.PHONE_REGEXP),
+        .trim()
+        .messages({
+            'string.pattern.base': 'Password not valid',
+        }),
 });

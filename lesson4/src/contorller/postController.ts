@@ -3,13 +3,20 @@ import { IPost } from '../entity';
 import { postService } from '../services';
 
 class PostController {
+    public async createPost(req: Request, res: Response): Promise<Response<IPost>> {
+        const post = await postService.createPost(req.body);
+
+        return res.json(post);
+    }
+
     public async postByUserId(req: Request, res: Response): Promise<Response<IPost>> {
         const { userId } = req.params;
 
         const post = await postService.postByUserId(Number(userId));
 
         if (!post) {
-            return res.status(400).json(`Not post by this ${userId} id's`);
+            return res.status(400)
+                .json(`Not post by this ${userId} id's`);
         }
         return res.json(post);
     }
@@ -20,11 +27,16 @@ class PostController {
         return res.json(posts);
     }
 
-    public async updatePostByUserId(req: Request, res: Response): Promise<Response<object>> {
-        const { id } = req.params;
-        const { title, text } = req.body;
+    public async updatePostById(req: Request, res: Response): Promise<Response<object>> {
 
-        await postService.updatePostByUserId(Number(id), text, title);
+        const { id } = req.params;
+
+        const {
+            title,
+            text,
+        } = req.body;
+
+        await postService.updatePostById(Number(id), text, title);
 
         return res.json('Post text updated successfully');
     }
