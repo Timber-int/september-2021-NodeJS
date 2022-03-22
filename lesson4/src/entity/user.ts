@@ -2,6 +2,7 @@ import { Column, Entity, OneToMany } from 'typeorm';
 import { CommonFields } from './commonFields';
 import { IPost, Post } from './post';
 import { Comment, IComment } from './comment';
+import { CONSTANTS } from '../constants';
 
 export interface IUser {
     id:number,
@@ -15,7 +16,7 @@ export interface IUser {
     comments: IComment[];
 }
 
-@Entity('users', { database: 'okten' })
+@Entity('users', { database: CONSTANTS.DATA_BASE })
 export class User extends CommonFields implements IUser {
     @Column({
         type: 'varchar',

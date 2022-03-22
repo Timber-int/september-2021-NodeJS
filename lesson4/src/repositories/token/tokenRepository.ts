@@ -5,21 +5,30 @@ import { ITokenDataToSave } from '../../interfaces';
 import { ITokenRepository } from './tokenRepository.interfaces';
 
 EntityRepository(Token);
-class TokenRepository extends Repository<Token>implements ITokenRepository {
-    public async saveTokensToDB(token:ITokenDataToSave):Promise<IToken> {
-        return getManager().getRepository(Token).save(token);
+
+class TokenRepository extends Repository<Token> implements ITokenRepository {
+    public async saveTokensToDB(token: ITokenDataToSave): Promise<IToken> {
+        return getManager()
+            .getRepository(Token)
+            .save(token);
     }
 
-    public async findTokenByUserId(userId:number):Promise<IToken | undefined> {
-        return getManager().getRepository(Token).findOne({ userId });
+    public async findTokenByUserId(userId: number): Promise<IToken | undefined> {
+        return getManager()
+            .getRepository(Token)
+            .findOne({ userId });
     }
 
-    public async deleteUserTokenPair(userId:number):Promise<object> {
-        return getManager().getRepository(Token).delete({ userId });
+    public async deleteUserTokenPairByParams(paramsForDelete: Partial<IToken>): Promise<object> {
+        return getManager()
+            .getRepository(Token)
+            .delete(paramsForDelete);
     }
 
-    public async findAccessToken(accessToken:string):Promise<IToken | undefined> {
-        return getManager().getRepository(Token).findOne({ accessToken });
+    public async findAccessToken(accessToken: string): Promise<IToken | undefined> {
+        return getManager()
+            .getRepository(Token)
+            .findOne({ accessToken });
     }
 }
 

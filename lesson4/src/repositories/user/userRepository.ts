@@ -20,6 +20,15 @@ class UserRepository extends Repository<User> implements IUserRepository {
             );
     }
 
+    public async getUserByPhone(phone: string): Promise<IUser | undefined> {
+        return getManager()
+            .getRepository(User)
+            .findOne(
+                { phone },
+                { relations: ['posts', 'comments'], where: { deletedAt: null } },
+            );
+    }
+
     public async getAllUsers(): Promise<IUser[]> {
         return getManager()
             .getRepository(User)

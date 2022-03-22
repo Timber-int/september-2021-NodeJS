@@ -44,12 +44,31 @@ class UserMiddleware {
 
             if (!userFromDB) {
                 res.status(404)
-                    .json('User not found');
+                    .json('User is already exist');
                 return;
             }
 
             req.user = userFromDB;
 
+            next();
+        } catch (e:any) {
+            res.status(400)
+                .json(e.message);
+        }
+    }
+
+    public async checkEmailAndPhoneExist(req: IRequestExtended, res: Response, next: NextFunction)
+        :Promise<void> {
+        try {
+            const userFromDBWithEmail = await userRepositories.getUserByEmail(req.body.email);
+
+            const userFromDBWithPhone = await userRepositories.getUserByPhone(req.body.phone);
+
+            if (userFromDBWithEmail || userFromDBWithPhone) {
+                res.status(404)
+                    .json('Wrong email or phone');
+                return;
+            }
             next();
         } catch (e:any) {
             res.status(400)

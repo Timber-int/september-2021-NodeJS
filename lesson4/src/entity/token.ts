@@ -3,6 +3,7 @@ import {
 } from 'typeorm';
 import { User } from './user';
 import { CommonFields, ICommonFields } from './commonFields';
+import { CONSTANTS } from '../constants';
 
 export interface IToken extends ICommonFields{
     refreshToken:string,
@@ -10,7 +11,7 @@ export interface IToken extends ICommonFields{
     userId:number
 }
 
-@Entity('token', { database: 'okten' })
+@Entity('token', { database: CONSTANTS.DATA_BASE })
 export class Token extends CommonFields implements IToken {
     @Column({
         type: 'varchar',

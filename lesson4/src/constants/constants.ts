@@ -7,3 +7,8 @@ export const TokenType = {
     ACCESS: 'ACCESS',
     REFRESH: 'REFRESH',
 };
+
+export const CONSTANTS = {
+    AUTHORIZATION: 'Authorization',
+    DATA_BASE: 'okten',
+};

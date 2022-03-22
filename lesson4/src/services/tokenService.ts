@@ -43,8 +43,8 @@ class TokenService {
         return token;
     }
 
-    public async deleteUserTokenPair(userId: number) {
-        return tokenRepository.deleteUserTokenPair(userId);
+    public async deleteUserTokenPair(paramsForDelete: Partial<IToken>):Promise<object> {
+        return tokenRepository.deleteUserTokenPairByParams(paramsForDelete);
     }
 
     public async verifyToken(authToken: string, tokenType:string)

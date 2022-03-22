@@ -2,12 +2,12 @@ import { NextFunction, Response } from 'express';
 import { tokenService, userService } from '../services';
 import { IRequestExtended } from '../interfaces';
 import { tokenRepository } from '../repositories';
-import { TokenType } from '../constants';
+import { CONSTANTS, TokenType } from '../constants';
 
 class AuthMiddleware {
     public async checkAccessToken(req: IRequestExtended, res: Response, next: NextFunction) {
         try {
-            const accessToken = req.get('Authorization');
+            const accessToken = req.get(CONSTANTS.AUTHORIZATION);
 
             if (!accessToken) {
                 throw new Error('Not token');
@@ -40,7 +40,7 @@ class AuthMiddleware {
 
     public async checkRefreshToken(req: IRequestExtended, res: Response, next: NextFunction) {
         try {
-            const refreshToken = req.get('Authorization');
+            const refreshToken = req.get(CONSTANTS.AUTHORIZATION);
 
             if (!refreshToken) {
                 throw new Error('Not token');
@@ -49,7 +49,7 @@ class AuthMiddleware {
             const { userEmail, userId } = await
             tokenService.verifyToken(refreshToken, TokenType.REFRESH);
 
-            await tokenService.deleteUserTokenPair(userId);
+            await tokenService.deleteUserTokenPair({ userId });
 
             const userFromToken = await userService.getUserByEmail(userEmail);
 

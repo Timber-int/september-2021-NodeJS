@@ -53,7 +53,7 @@ class AuthController {
 
         res.clearCookie(COOKIE.nameRefreshToken);
 
-        await tokenService.deleteUserTokenPair(id);
+        await tokenService.deleteUserTokenPair({ userId: id });
 
         return res.json('We will be waiting for you later');
     }

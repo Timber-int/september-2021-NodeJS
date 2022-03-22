@@ -4,6 +4,7 @@ import {
 import { CommonFields } from './commonFields';
 import { User } from './user';
 import { Comment, IComment } from './comment';
+import { CONSTANTS } from '../constants';
 
 export interface IPost {
     title:string,
@@ -12,7 +13,7 @@ export interface IPost {
     comments: IComment[];
 }
 
-@Entity('posts', { database: 'okten' })
+@Entity('posts', { database: CONSTANTS.DATA_BASE })
 export class Post extends CommonFields implements IPost {
     @Column({
         type: 'varchar',

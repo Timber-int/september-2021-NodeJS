@@ -4,6 +4,7 @@ import {
 import { CommonFields } from './commonFields';
 import { Post } from './post';
 import { User } from './user';
+import { CONSTANTS } from '../constants';
 
 export interface IComment {
     text: string,
@@ -13,7 +14,7 @@ export interface IComment {
     dislike: number,
 }
 
-@Entity('comments', { database: 'okten' })
+@Entity('comments', { database: CONSTANTS.DATA_BASE })
 export class Comment extends CommonFields implements IComment {
     @Column({
         type: 'varchar',
