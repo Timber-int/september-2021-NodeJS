@@ -35,12 +35,11 @@ class PostRepository extends Repository<Post> implements IPostRepository {
         return posts;
     }
 
-    public async updatePostById(id:number, text: string, title: string): Promise<object> {
+    public async updatePostById(id:number, text: string): Promise<object> {
         const post = await getManager()
             .getRepository(Post)
             .update({ id }, {
                 text,
-                title,
             });
         return post;
     }

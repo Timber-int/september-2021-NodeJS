@@ -32,11 +32,10 @@ class PostController {
         const { id } = req.params;
 
         const {
-            title,
             text,
         } = req.body;
 
-        await postService.updatePostById(Number(id), text, title);
+        await postService.updatePostById(Number(id), text);
 
         return res.json('Post text updated successfully');
     }

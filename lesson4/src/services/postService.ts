@@ -22,8 +22,8 @@ class PostService {
         return posts;
     }
 
-    public async updatePostById(id:number, text:string, title:string):Promise<object> {
-        const updatedPost = await postRepository.updatePostById(id, text, title);
+    public async updatePostById(id:number, text:string):Promise<object> {
+        const updatedPost = await postRepository.updatePostById(id, text);
         return updatedPost;
     }
 }
