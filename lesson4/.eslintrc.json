@@ -36,7 +36,8 @@
     ],
     "no-underscore-dangle": "off",
     "prefer-regex-literals": "off",
-    "function-paren-newline": "off"
+    "function-paren-newline": "off",
+    "max-len": ["error", {"code":  140}]
   },
   "settings": {
     "import/resolver": {

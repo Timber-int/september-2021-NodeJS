@@ -32,9 +32,9 @@ class UserService {
         return user;
     }
 
-    public async updateById(id:number, data:IUser):Promise<object> {
+    public async updateById(id:number, data: Partial<IUser>):Promise<object> {
         const { password } = data;
-        const hashedPassword = await this._hashPassword(password);
+        const hashedPassword = await this._hashPassword(password as string);
         const userWithHashPassword = { ...data, password: hashedPassword };
         const user = await userRepositories.updateById(id, userWithHashPassword);
         return user;

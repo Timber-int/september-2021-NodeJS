@@ -1,17 +1,22 @@
-import { Router } from 'express';
+import { NextFunction, Response, Router } from 'express';
 import { authController } from '../contorller';
 import { authMiddleware, userMiddleware } from '../middlewares';
+import { IRequestExtended } from '../interfaces';
+import { loginDataValidator, userBodyForRegistrationValidator } from '../validator';
 
 const router = Router();
 
-router.post('/registration',
-    userMiddleware.checkEmailAndPhoneExist,
-    authMiddleware.checkDataValidationToRegistration,
-    userMiddleware.checkUserBodyValid,
-    authController.registration,
+router.post('/registration', (req: IRequestExtended, res: Response, next: NextFunction) => {
+    req.chosenValidationType = userBodyForRegistrationValidator;
+    next();
+}, authMiddleware.dataValidator, userMiddleware.checkEmailAndPhoneExist, authController.registration,
 );
 router.post('/login',
-    authMiddleware.checkDataValidationToLogin,
+    (req: IRequestExtended, res: Response, next: NextFunction) => {
+        req.chosenValidationType = loginDataValidator;
+        next();
+    },
+    authMiddleware.dataValidator,
     userMiddleware.checkIsUserExist,
     authController.login,
 );

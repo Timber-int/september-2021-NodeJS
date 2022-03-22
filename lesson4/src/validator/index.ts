@@ -1,1 +1,1 @@
-export * from './validateData';
+export * from './userValidator';

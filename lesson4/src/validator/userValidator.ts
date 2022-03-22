@@ -53,3 +53,17 @@ export const loginDataValidator = Joi.object({
         .required()
         .trim(),
 });
+
+export const userDataForUpdateValidator = Joi.object({
+    email: Joi.string()
+        .regex(CONSTANTS.EMAIL_REGEXP)
+        .required()
+        .trim(),
+    password: Joi.string()
+        .regex(CONSTANTS.PASSWORD_REGEXP)
+        .required()
+        .trim(),
+    phone: Joi.string()
+        .required()
+        .regex(CONSTANTS.PHONE_REGEXP),
+});

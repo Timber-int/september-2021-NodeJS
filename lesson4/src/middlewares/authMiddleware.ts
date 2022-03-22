@@ -3,7 +3,6 @@ import { tokenService, userService } from '../services';
 import { IRequestExtended } from '../interfaces';
 import { tokenRepository } from '../repositories';
 import { CONSTANTS, TokenType } from '../constants';
-import { loginDataValidator, userBodyForRegistrationValidator } from '../validator';
 
 class AuthMiddleware {
     public async checkAccessToken(req: IRequestExtended, res: Response, next: NextFunction) {
@@ -71,17 +70,14 @@ class AuthMiddleware {
         }
     }
 
-    public async checkDataValidationToRegistration(
-        req: IRequestExtended,
-        res: Response,
-        next: NextFunction,
-    )
-        : Promise<void> {
+    public async dataValidator(req: IRequestExtended, res: Response, next: NextFunction): Promise<void> {
         try {
+            const validationType = req.chosenValidationType;
+
             const {
                 error,
                 value,
-            } = userBodyForRegistrationValidator.validate(req.body);
+            } = validationType.validate(req.body);
 
             if (error) {
                 throw new Error(`${error?.message}`);
@@ -90,32 +86,9 @@ class AuthMiddleware {
             req.body = value;
 
             next();
-        } catch (e:any) {
-            res.status(404).json(e.message);
-        }
-    }
-
-    public async checkDataValidationToLogin(
-        req: IRequestExtended,
-        res: Response,
-        next: NextFunction,
-    )
-        : Promise<void> {
-        try {
-            const {
-                error,
-                value,
-            } = loginDataValidator.validate(req.body);
-
-            if (error) {
-                throw new Error(`${error?.message}`);
-            }
-
-            req.body = value;
-
-            next();
-        } catch (e:any) {
-            res.status(404).json(e.message);
+        } catch (e: any) {
+            res.status(400)
+                .json(e.message);
         }
     }
 }
