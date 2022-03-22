@@ -3,6 +3,7 @@ import { tokenService, userService } from '../services';
 import { IRequestExtended } from '../interfaces';
 import { tokenRepository } from '../repositories';
 import { CONSTANTS, TokenType } from '../constants';
+import { loginDataValidator, userBodyForRegistrationValidator } from '../validator';
 
 class AuthMiddleware {
     public async checkAccessToken(req: IRequestExtended, res: Response, next: NextFunction) {
@@ -46,8 +47,10 @@ class AuthMiddleware {
                 throw new Error('Not token');
             }
 
-            const { userEmail, userId } = await
-            tokenService.verifyToken(refreshToken, TokenType.REFRESH);
+            const {
+                userEmail,
+                userId,
+            } = await tokenService.verifyToken(refreshToken, TokenType.REFRESH);
 
             await tokenService.deleteUserTokenPair({ userId });
 
@@ -65,6 +68,54 @@ class AuthMiddleware {
                 status: 400,
                 message: e.message,
             });
+        }
+    }
+
+    public async checkDataValidationToRegistration(
+        req: IRequestExtended,
+        res: Response,
+        next: NextFunction,
+    )
+        : Promise<void> {
+        try {
+            const {
+                error,
+                value,
+            } = userBodyForRegistrationValidator.validate(req.body);
+
+            if (error) {
+                throw new Error(`${error?.message}`);
+            }
+
+            req.body = value;
+
+            next();
+        } catch (e:any) {
+            res.status(404).json(e.message);
+        }
+    }
+
+    public async checkDataValidationToLogin(
+        req: IRequestExtended,
+        res: Response,
+        next: NextFunction,
+    )
+        : Promise<void> {
+        try {
+            const {
+                error,
+                value,
+            } = loginDataValidator.validate(req.body);
+
+            if (error) {
+                throw new Error(`${error?.message}`);
+            }
+
+            req.body = value;
+
+            next();
+        } catch (e:any) {
+            res.status(404).json(e.message);
         }
     }
 }

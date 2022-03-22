@@ -5,10 +5,14 @@ import { userRepositories } from '../repositories';
 
 class UserMiddleware {
     public async checkUserBodyValid(req: IRequestExtended, res: Response, next: NextFunction)
-        :Promise<void> {
+        : Promise<void> {
         try {
             const {
-                firstName, lastName, age, phone, email,
+                firstName,
+                lastName,
+                age,
+                phone,
+                email,
             } = req.body;
 
             if (!email) {
@@ -26,19 +30,19 @@ class UserMiddleware {
                 throw new Error('Phone is required!!!');
             }
 
-            if (age < 12) {
+            if (age < 12 && age > 120) {
                 throw new Error('Wrong age is not valid!!!');
             }
 
             next();
-        } catch (e:any) {
+        } catch (e: any) {
             res.status(400)
                 .json(e.message);
         }
     }
 
     public async checkIsUserExist(req: IRequestExtended, res: Response, next: NextFunction)
-        :Promise<void> {
+        : Promise<void> {
         try {
             const userFromDB = await userRepositories.getUserByEmail(req.body.email);
 
@@ -51,14 +55,14 @@ class UserMiddleware {
             req.user = userFromDB;
 
             next();
-        } catch (e:any) {
+        } catch (e: any) {
             res.status(400)
                 .json(e.message);
         }
     }
 
     public async checkEmailAndPhoneExist(req: IRequestExtended, res: Response, next: NextFunction)
-        :Promise<void> {
+        : Promise<void> {
         try {
             const userFromDBWithEmail = await userRepositories.getUserByEmail(req.body.email);
 
@@ -70,7 +74,7 @@ class UserMiddleware {
                 return;
             }
             next();
-        } catch (e:any) {
+        } catch (e: any) {
             res.status(400)
                 .json(e.message);
         }
