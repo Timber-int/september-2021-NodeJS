@@ -55,7 +55,7 @@ class AuthController {
 
         await tokenService.deleteUserTokenPair({ userId: id });
 
-        return res.json('We will be waiting for you later');
+        return res.json(`We will be waiting for you later ${req.user?.firstName}`);
     }
 
     public async refresh(req:IRequestExtended, res:Response)
