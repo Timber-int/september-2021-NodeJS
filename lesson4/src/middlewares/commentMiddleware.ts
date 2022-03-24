@@ -13,13 +13,13 @@ class CommentMiddleware {
             const userFromDB = await userService.getUserById(Number(authorId));
 
             if (!userFromDB) {
-                next(new ErrorHandler(MESSAGE.BAD_AUTHOR_ID,STATUS.CODE_404));
+                next(new ErrorHandler(MESSAGE.BAD_AUTHOR_ID, STATUS.CODE_404));
                 return;
             }
 
             next();
         } catch (e) {
-           next(e);
+            next(e);
         }
     }
 

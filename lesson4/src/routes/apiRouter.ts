@@ -14,7 +14,6 @@ router.use('/auth', authRouter);
 
 // @ts-ignore
 router.use('*', (err, req, res, next) => {
-
     res.status(err.code || STATUS.CODE_500)
         .json(err.message);
 });
