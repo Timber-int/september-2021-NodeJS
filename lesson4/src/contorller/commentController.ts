@@ -1,44 +1,63 @@
-import { Request, Response } from 'express';
-import { IComment } from '../entity';
+import { NextFunction, Request, Response } from 'express';
 import { commentService } from '../services';
+import { ErrorHandler } from '../errorHandler';
+import { MESSAGE } from '../message';
+import { STATUS } from '../errorsCode';
 
 class CommentController {
-    public async createComment(req: Request, res: Response): Promise<Response<IComment>> {
-        const comment = await commentService.createComment(req.body);
-        return res.json(comment);
-    }
-
-    public async getAllComments(req: Request, res: Response): Promise<Response<IComment[]>> {
-        const comments = await commentService.getAllComments();
-        return res.json(comments);
-    }
-
-    public async getCommentByUserId(req: Request, res: Response): Promise<Response<IComment>> {
-        const { authorId } = req.params;
-
-        const comment = await commentService.getCommentByUserId(Number(authorId));
-
-        if (!comment) {
-            return res.json(`Not comment by this ${authorId} authorId`);
+    public async createComment(req: Request, res: Response, next: NextFunction) {
+        try {
+            const comment = await commentService.createComment(req.body);
+            res.json(comment);
+        } catch (e) {
+            next(e);
         }
-
-        return res.json(comment);
     }
 
-    public async getCommentById(req: Request, res: Response):
-        Promise<Response<IComment | undefined>> {
-        const { id } = req.params;
-
-        const comment = await commentService.getCommentById(Number(id));
-
-        if (!comment) {
-            return res.json(`Not comment by this ${id} id`);
+    public async getAllComments(req: Request, res: Response, next: NextFunction) {
+        try {
+            const comments = await commentService.getAllComments();
+            res.json(comments);
+        } catch (e) {
+            next(e);
         }
-
-        return res.json(comment);
     }
 
-    public async standLikeOrDislikeComments(req: Request, res: Response):Promise<object> {
+    public async getCommentByUserId(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { authorId } = req.params;
+
+            const comment = await commentService.getCommentByUserId(Number(authorId));
+
+            if (!comment) {
+                next(new ErrorHandler(MESSAGE.NOT_COMMENT_AUTHOR_ID, STATUS.CODE_400));
+                return;
+            }
+
+            res.json(comment);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    public async getCommentById(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { id } = req.params;
+
+            const comment = await commentService.getCommentById(Number(id));
+
+            if (!comment) {
+                next(new ErrorHandler(MESSAGE.NOT_COMMENT_ID, STATUS.CODE_404));
+                return;
+            }
+
+            res.json(comment);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    public async standLikeOrDislikeComments(req: Request, res: Response, next: NextFunction) {
         try {
             const {
                 commentId,
@@ -48,22 +67,25 @@ class CommentController {
             const comment = await commentService.getCommentById(Number(commentId));
 
             if (!comment) {
-                throw new Error('Not comment for this Id');
+                next(new ErrorHandler(MESSAGE.NOT_COMMENT_ID, STATUS.CODE_404));
+                return;
             }
 
-            if (action === 'like') {
+            if (action === MESSAGE.LIKE) {
                 await commentService.sendLikeToComment(Number(commentId), comment);
-                return res.json(`${action} is good deal!!!`);
+                res.json(`${action} ${MESSAGE.GOOD_DEAL}`);
+                return;
             }
 
-            if (action === 'dislike') {
+            if (action === MESSAGE.DISLIKE) {
                 await commentService.sendDislikeToComment(Number(commentId), comment);
-                return res.json(`${action} is good deal!!!`);
+                res.json(`${action} ${MESSAGE.GOOD_DEAL}`);
+                return;
             }
 
-            return res.json(`Thank you for ${action}`);
+            res.json(`${MESSAGE.THANK_YOU_FOR} ${action}`);
         } catch (e) {
-            return res.json('Error');
+            next(e);
         }
     }
 }

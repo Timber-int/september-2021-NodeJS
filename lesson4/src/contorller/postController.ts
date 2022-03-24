@@ -1,42 +1,60 @@
-import { Request, Response } from 'express';
-import { IPost } from '../entity';
+import { NextFunction, Request, Response } from 'express';
 import { postService } from '../services';
+import { MESSAGE } from '../message';
+import { ErrorHandler } from '../errorHandler';
+import { STATUS } from '../errorsCode';
 
 class PostController {
-    public async createPost(req: Request, res: Response): Promise<Response<IPost>> {
-        const post = await postService.createPost(req.body);
+    public async createPost(req: Request, res: Response, next: NextFunction) {
+        try {
+            const post = await postService.createPost(req.body);
 
-        return res.json(post);
-    }
-
-    public async postByUserId(req: Request, res: Response): Promise<Response<IPost>> {
-        const { userId } = req.params;
-
-        const post = await postService.postByUserId(Number(userId));
-
-        if (!post) {
-            return res.status(400)
-                .json(`Not post by this ${userId} id's`);
+            res.json(post);
+        } catch (e) {
+            next(e);
         }
-        return res.json(post);
     }
 
-    public async getAllPosts(req: Request, res: Response): Promise<Response<IPost[]>> {
-        const posts = await postService.getAllPosts();
+    public async postByUserId(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { userId } = req.params;
 
-        return res.json(posts);
+            const post = await postService.postByUserId(Number(userId));
+
+            if (!post) {
+                next(new ErrorHandler(MESSAGE.NOT_POST, STATUS.CODE_404));
+                return;
+            }
+            res.json(post);
+        } catch (e) {
+            next(e);
+        }
     }
 
-    public async updatePostById(req: Request, res: Response): Promise<Response<object>> {
-        const { id } = req.params;
+    public async getAllPosts(req: Request, res: Response, next: NextFunction) {
+        try {
+            const posts = await postService.getAllPosts();
 
-        const {
-            text,
-        } = req.body;
+            res.json(posts);
+        } catch (e) {
+            next(e);
+        }
+    }
 
-        await postService.updatePostById(Number(id), text);
+    public async updatePostById(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { id } = req.params;
 
-        return res.json('Post text updated successfully');
+            const {
+                text,
+            } = req.body;
+
+            await postService.updatePostById(Number(id), text);
+
+            res.json(MESSAGE.POST_TEXT_UPDATED_SUCCESSFULLY);
+        } catch (e) {
+            next(e);
+        }
     }
 }
 

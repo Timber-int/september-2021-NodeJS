@@ -9,7 +9,7 @@ const router = Router();
 router.get('/', userController.getAllUsers);
 // router.get('/:id', userController.getUserById);
 router.get('/:email', userController.getUserByEmail);
-router.post('/', userController.createUser);
+
 router.put('/:id', (req: IRequestExtended, res: Response, next: NextFunction) => {
     req.chosenValidationType = userDataForUpdateValidator;
     next();

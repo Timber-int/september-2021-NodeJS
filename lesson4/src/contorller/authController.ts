@@ -1,28 +1,35 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { COOKIE } from '../constants';
-import { IRequestExtended, ITokenData, IUsersDataWithTokensToReturn } from '../interfaces';
+import { IRequestExtended } from '../interfaces';
 import { authService, tokenService, userService } from '../services';
 import { IUser } from '../entity';
+import { MESSAGE } from '../message';
 
 class AuthController {
-    public async registration(req: Request, res: Response): Promise<Response<ITokenData>> {
-        const data = await authService.registration(req.body);
-        res.cookie(
-            COOKIE.nameRefreshToken,
-            data.refreshToken,
-            {
-                maxAge: COOKIE.maxAgeRefreshToken,
-                httpOnly: true,
-            },
-        );
-
-        return res.json(data);
+    public async registration(req: Request, res: Response, next: NextFunction) {
+        try {
+            const data = await authService.registration(req.body);
+            res.cookie(
+                COOKIE.nameRefreshToken,
+                data.refreshToken,
+                {
+                    maxAge: COOKIE.maxAgeRefreshToken,
+                    httpOnly: true,
+                },
+            );
+            res.json(data);
+        } catch (e) {
+            next(e);
+        }
     }
 
-    public async login(req: IRequestExtended, res: Response)
-        :Promise<Response<IUsersDataWithTokensToReturn>> {
+    public async login(req: IRequestExtended, res: Response, next: NextFunction) {
         try {
-            const { id, email, password: hashPassword } = req.user as IUser;
+            const {
+                id,
+                email,
+                password: hashPassword,
+            } = req.user as IUser;
 
             const { password } = req.body;
 
@@ -33,55 +40,65 @@ class AuthController {
                 userEmail: email,
             });
 
-            const { accessToken, refreshToken } = tokenPair;
+            const {
+                accessToken,
+                refreshToken,
+            } = tokenPair;
 
             await tokenService.saveToken(id, refreshToken, accessToken);
 
-            return res.json({
+            res.json({
                 refreshToken,
                 accessToken,
                 user: req.user,
             });
-        } catch (e:any) {
-            return res.status(400)
-                .json(e.message);
+        } catch (e) {
+            next(e);
         }
     }
 
-    public async logout(req: IRequestExtended, res: Response): Promise<Response<string>> {
-        const { id } = req.user as IUser;
+    public async logout(req: IRequestExtended, res: Response, next: NextFunction) {
+        try {
+            const { id } = req.user as IUser;
 
-        res.clearCookie(COOKIE.nameRefreshToken);
+            res.clearCookie(COOKIE.nameRefreshToken);
 
-        await tokenService.deleteUserTokenPair({ userId: id });
+            await tokenService.deleteUserTokenPair({ userId: id });
 
-        return res.json(`We will be waiting for you later ${req.user?.firstName}`);
+            res.json(`${MESSAGE.BY_USER} ${req.user?.firstName}`);
+        } catch (e) {
+            next(e);
+        }
     }
 
-    public async refresh(req:IRequestExtended, res:Response)
-        :Promise<Response<IUsersDataWithTokensToReturn>> {
+    public async refresh(req: IRequestExtended, res: Response, next: NextFunction) {
         try {
             const user = req.user as IUser;
 
-            const { id, email } = user;
+            const {
+                id,
+                email,
+            } = user;
 
             const tokenPair = await tokenService.generateTokenPair({
                 userId: id,
                 userEmail: email,
             });
 
-            const { accessToken, refreshToken } = tokenPair;
+            const {
+                accessToken,
+                refreshToken,
+            } = tokenPair;
 
             await tokenService.saveToken(id, refreshToken, accessToken);
 
-            return res.json({
+            res.json({
                 refreshToken,
                 accessToken,
                 user: req.user,
             });
-        } catch (e:any) {
-            return res.status(400)
-                .json(e.message);
+        } catch (e) {
+            next(e);
         }
     }
 }

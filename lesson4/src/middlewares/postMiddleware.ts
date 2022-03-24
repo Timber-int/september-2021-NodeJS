@@ -1,6 +1,9 @@
 import { NextFunction, Response } from 'express';
 import { IRequestExtended } from '../interfaces';
 import { postService, userService } from '../services';
+import { ErrorHandler } from '../errorHandler';
+import { MESSAGE } from '../message';
+import { STATUS } from '../errorsCode';
 
 class PostMiddleware {
     public async checkIsUserByIdExist(req: IRequestExtended, res: Response, next: NextFunction): Promise<void> {
@@ -10,13 +13,13 @@ class PostMiddleware {
             const user = await userService.getUserById(Number(userId));
 
             if (!user) {
-                throw new Error(`There is no user with ${userId} id who wrote this post`);
+                next(new ErrorHandler(MESSAGE.NOT_AUTHOR_POST, STATUS.CODE_404));
+                return;
             }
 
             next();
-        } catch (e: any) {
-            res.status(400)
-                .json(e.message);
+        } catch (e) {
+            next(e);
         }
     }
 
@@ -27,13 +30,13 @@ class PostMiddleware {
             const post = await postService.fiendPostByTitle(title);
 
             if (post) {
-                throw new Error(`${title} must by a unique`);
+                next(new ErrorHandler(MESSAGE.UNIQUE_TITLE, STATUS.CODE_403));
+                return;
             }
 
             next();
-        } catch (e: any) {
-            res.status(400)
-                .json(e.message);
+        } catch (e) {
+            next(e);
         }
     }
 }

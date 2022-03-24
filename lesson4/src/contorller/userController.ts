@@ -1,57 +1,67 @@
-import { Request, Response } from 'express';
-import { IUser } from '../entity';
+import { NextFunction, Request, Response } from 'express';
 import { userService } from '../services';
+import { STATUS } from '../errorsCode';
+import { MESSAGE } from '../message';
+import { ErrorHandler } from '../errorHandler';
 
 class UserController {
-    public async createUser(req: Request, res: Response): Promise<Response<IUser>> {
-        const createdUser = await userService.createUser(req.body);
-        return res.status(201).json(createdUser);
-    }
-
-    public async getUserByEmail(req: Request, res: Response): Promise<Response<IUser>> {
-        const { email } = req.params;
-
-        const user = await userService.getUserByEmail(email);
-        return res.json(user);
-    }
-
-    public async getAllUsers(req: Request, res: Response): Promise<Response<IUser[]>> {
+    public async getUserByEmail(req: Request, res: Response, next: NextFunction) {
         try {
-            const users = await userService.getAllUsers();
-            return res.json(users);
+            const { email } = req.params;
+
+            const user = await userService.getUserByEmail(email);
+            res.json(user);
         } catch (e) {
-            return res.send(e);
+            next(e);
         }
     }
 
-    public async getUserById(req: Request, res: Response): Promise<Response<IUser>> {
+    public async getAllUsers(req: Request, res: Response, next: NextFunction) {
+        try {
+            const users = await userService.getAllUsers();
+            res.json(users);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    public async getUserById(req: Request, res: Response, next: NextFunction) {
         try {
             const { id } = req.params;
 
             const user = await userService.getUserById(Number(id));
-            return res.json(user);
+            res.json(user);
         } catch (e) {
-            return res.send(e);
+            next(e);
         }
     }
 
-    public async deleteById(req: Request, res: Response): Promise<Response<object>> {
+    public async deleteById(req: Request, res: Response, next: NextFunction) {
         try {
             const { id } = req.params;
+
+            const userFromDB = await userService.getUserById(Number(id));
+
+            if (!userFromDB) {
+                next(new ErrorHandler(MESSAGE.NOT_USER, STATUS.CODE_404));
+                return;
+            }
+
             await userService.deleteById(Number(id));
-            return res.json('User deleted successfully');
+            res.json(MESSAGE.USER_DELETE_SUCCESSFULLY);
         } catch (e) {
-            return res.send(e);
+            next(e);
         }
     }
 
-    public async updateById(req: Request, res: Response): Promise<object> {
+    public async updateById(req: Request, res: Response, next: NextFunction) {
         try {
             const { id } = req.params;
             await userService.updateById(Number(id), req.body);
-            return res.status(201).json('User updated successfully');
+            res.status(STATUS.CODE_201)
+                .json(MESSAGE.USER_UPDATE_SUCCESSFULLY);
         } catch (e) {
-            return res.send(e);
+            next();
         }
     }
 }

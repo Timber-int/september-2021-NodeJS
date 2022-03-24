@@ -2,6 +2,7 @@ import { userService } from './userService';
 import { tokenService } from './tokenService';
 import { IUser } from '../entity';
 import { ITokenData } from '../interfaces';
+import { MESSAGE } from '../message';
 
 class AuthService {
     public async registration(body:IUser):Promise<ITokenData> {
@@ -10,7 +11,7 @@ class AuthService {
         const userFromDbWithEmail = await userService.getUserByEmail(email);
 
         if (userFromDbWithEmail) {
-            throw new Error(`User with email: ${email} already exists `);
+            throw new Error(MESSAGE.EMAIL_ALREADY_EXISTS);
         }
 
         const createdUser = await userService.createUser(body);

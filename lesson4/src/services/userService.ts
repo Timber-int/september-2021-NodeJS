@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import { IUser } from '../entity';
 import { userRepositories } from '../repositories';
+import { MESSAGE } from '../message';
 
 class UserService {
     public async createUser(user:IUser):Promise<IUser> {
@@ -45,7 +46,7 @@ class UserService {
         const isPasswordUnique = await bcrypt.compare(password, passwordWithHash);
 
         if (!isPasswordUnique) {
-            throw new Error('User not exists');
+            throw new Error(MESSAGE.WRONG_EMAIL_OR_PASSWORD);
         }
     }
 

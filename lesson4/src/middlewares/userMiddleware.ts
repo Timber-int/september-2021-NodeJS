@@ -1,7 +1,9 @@
 import { NextFunction, Response } from 'express';
-
+import { ErrorHandler } from '../errorHandler';
 import { IRequestExtended } from '../interfaces';
 import { userRepositories } from '../repositories';
+import { MESSAGE } from '../message';
+import { STATUS } from '../errorsCode';
 
 class UserMiddleware {
     public async checkIsUserExist(req: IRequestExtended, res: Response, next: NextFunction): Promise<void> {
@@ -9,17 +11,15 @@ class UserMiddleware {
             const userFromDB = await userRepositories.getUserByEmail(req.body.email);
 
             if (!userFromDB) {
-                res.status(404)
-                    .json('Wrong email or password');
+                next(new ErrorHandler(MESSAGE.WRONG_EMAIL_OR_PASSWORD, STATUS.CODE_404));
                 return;
             }
 
             req.user = userFromDB;
 
             next();
-        } catch (e: any) {
-            res.status(400)
-                .json(e.message);
+        } catch (e) {
+            next(e);
         }
     }
 
@@ -30,14 +30,13 @@ class UserMiddleware {
             const userFromDBWithPhone = await userRepositories.getUserByPhone(req.body.phone);
 
             if (userFromDBWithEmail || userFromDBWithPhone) {
-                res.status(404)
-                    .json('Wrong email or phone');
+                next(new ErrorHandler(MESSAGE.WRONG_EMAIL_OR_PHONE, STATUS.CODE_404));
                 return;
             }
+
             next();
-        } catch (e: any) {
-            res.status(400)
-                .json(e.message);
+        } catch (e) {
+            next(e);
         }
     }
 }

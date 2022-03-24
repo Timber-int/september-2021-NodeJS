@@ -1,6 +1,9 @@
 import { NextFunction, Response } from 'express';
 import { IRequestExtended } from '../interfaces';
 import { postService, userService } from '../services';
+import { ErrorHandler } from '../errorHandler';
+import { MESSAGE } from '../message';
+import { STATUS } from '../errorsCode';
 
 class CommentMiddleware {
     public async checkIsAuthorComment(req: IRequestExtended, res: Response, next: NextFunction): Promise<void> {
@@ -10,12 +13,13 @@ class CommentMiddleware {
             const userFromDB = await userService.getUserById(Number(authorId));
 
             if (!userFromDB) {
-                throw new Error('AuthorId is not correct');
+                next(new ErrorHandler(MESSAGE.BAD_AUTHOR_ID,STATUS.CODE_404));
+                return;
             }
 
             next();
-        } catch (e: any) {
-            res.json(e.message);
+        } catch (e) {
+           next(e);
         }
     }
 
@@ -26,12 +30,13 @@ class CommentMiddleware {
             const postFromDB = await postService.getPostById(Number(postId));
 
             if (!postFromDB) {
-                throw new Error('PostId is not correct');
+                next(new ErrorHandler(MESSAGE.BAD_POST_ID, STATUS.CODE_404));
+                return;
             }
 
             next();
-        } catch (e: any) {
-            res.json(e.message);
+        } catch (e) {
+            next(e);
         }
     }
 }
