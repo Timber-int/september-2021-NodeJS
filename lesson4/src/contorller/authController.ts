@@ -1,9 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
 import { COOKIE } from '../constants';
 import { IRequestExtended } from '../interfaces';
-import { authService, tokenService, userService } from '../services';
+import {
+    authService, emailService, tokenService, userService,
+} from '../services';
 import { IUser } from '../entity';
 import { MESSAGE } from '../message';
+import { emailActionEnum } from '../emailTemplates';
 
 class AuthController {
     public async registration(req: Request, res: Response, next: NextFunction) {
@@ -32,6 +35,8 @@ class AuthController {
             } = req.user as IUser;
 
             const { password } = req.body;
+
+            await emailService.sendMail(email, emailActionEnum.WELCOME);
 
             await userService.compareUserPassword(password, hashPassword);
 
