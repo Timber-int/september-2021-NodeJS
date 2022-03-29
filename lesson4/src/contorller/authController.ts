@@ -6,7 +6,7 @@ import {
 } from '../services';
 import { IUser } from '../entity';
 import { MESSAGE } from '../message';
-import { emailActionEnum } from '../emailTemplates';
+import { EmailActionEnum } from '../EmailInformation';
 
 class AuthController {
     public async registration(req: Request, res: Response, next: NextFunction) {
@@ -36,7 +36,7 @@ class AuthController {
 
             const { password } = req.body;
 
-            await emailService.sendMail(email, emailActionEnum.WELCOME);
+            await emailService.sendMail(email, EmailActionEnum.WELCOME, { id });
 
             await userService.compareUserPassword(password, hashPassword);
 

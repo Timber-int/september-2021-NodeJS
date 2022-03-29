@@ -3,11 +3,11 @@ import { STATUS } from '../errorsCode';
 export class ErrorHandler extends Error {
     message: string;
 
-    code: number;
+    status: number;
 
-    constructor(message: string, code: number = STATUS.CODE_400) {
+    constructor(message: string, status: number = STATUS.CODE_400) {
         super(message);
-        this.code = code;
+        this.status = status;
 
         Error.captureStackTrace(this, this.constructor);
     }

@@ -9,6 +9,7 @@ export const config = {
     EXPIRES_IN_ACCESS: process.env.EXPIRES_IN_ACCESS || '1d',
     EXPIRES_IN_REFRESH: process.env.EXPIRES_IN_REFRESH || '1d',
 
-    NO_REPLY_EMAIL: process.env.ROOT_EMAIL,
-    NO_REPLY_EMAIL_PASSWORD: process.env.ROOT_EMAIL_PASSWORD,
+    NO_REPLY_EMAIL: process.env.NO_REPLY_EMAIL,
+    NO_REPLY_EMAIL_PASSWORD: process.env.NO_REPLY_EMAIL_PASSWORD,
+
 };
