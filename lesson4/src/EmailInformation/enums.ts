@@ -5,4 +5,6 @@ export enum EmailActionEnum {
     LOGOUT,
     // eslint-disable-next-line no-unused-vars
     REGISTRATION,
+    // eslint-disable-next-line no-unused-vars
+    FORGOT_PASSWORD,
 }

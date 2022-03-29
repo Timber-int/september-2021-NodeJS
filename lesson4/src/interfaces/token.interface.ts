@@ -6,6 +6,11 @@ export interface ITokenDataToSave {
     userId: number,
 }
 
+export interface IActionTokenDataToSave {
+    actionToken: string,
+    userId: number,
+}
+
 export interface ITokenPair {
     accessToken: string,
     refreshToken: string;

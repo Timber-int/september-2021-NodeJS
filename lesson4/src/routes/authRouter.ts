@@ -2,7 +2,7 @@ import { NextFunction, Response, Router } from 'express';
 import { authController } from '../contorller';
 import { authMiddleware, userMiddleware } from '../middlewares';
 import { IRequestExtended } from '../interfaces';
-import { loginDataValidator, userBodyForRegistrationValidator } from '../validator';
+import { forgotPasswordValidator, loginDataValidator, userBodyForRegistrationValidator } from '../validator';
 
 const router = Router();
 
@@ -22,5 +22,10 @@ router.post('/login',
 );
 router.post('/logout', authMiddleware.checkAccessToken, authController.logout);
 router.post('/refresh', authMiddleware.checkRefreshToken, authController.refresh);
+
+router.post('/forgot/password', (req: IRequestExtended, res: Response, next: NextFunction) => {
+    req.chosenValidationType = forgotPasswordValidator;
+    next();
+}, authMiddleware.dataValidator, userMiddleware.checkIsUserExist, authController.sendMailUserWhoForgotPassword);
 
 export const authRouter = router;

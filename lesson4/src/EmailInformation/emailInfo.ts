@@ -13,4 +13,9 @@ export const emailInfo = {
         subject: 'Welcome!!!',
         templateName: 'registration',
     },
+
+    [EmailActionEnum.FORGOT_PASSWORD]: {
+        subject: 'Don\' worry you always car change you password!!!',
+        templateName: 'forgotPassword',
+    },
 };

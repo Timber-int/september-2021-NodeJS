@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
 import { config } from '../config';
-import { IToken } from '../entity';
+import { IActionToken, IToken } from '../entity';
 import { ITokenPair, IUserPayload } from '../interfaces';
-import { tokenRepository } from '../repositories';
+import { actionTokenRepository, tokenRepository } from '../repositories';
 import { TokenType } from '../constants';
 
 class TokenService {
@@ -25,7 +25,7 @@ class TokenService {
         };
     }
 
-    public async saveToken(userId: number, refreshToken: string, accessToken:string)
+    public async saveToken(userId: number, refreshToken: string, accessToken: string)
         : Promise<IToken> {
         const tokenFromDb = await tokenRepository.findTokenByUserId(userId);
 
@@ -43,12 +43,12 @@ class TokenService {
         return token;
     }
 
-    public async deleteUserTokenPair(paramsForDelete: Partial<IToken>):Promise<object> {
+    public async deleteUserTokenPair(paramsForDelete: Partial<IToken>): Promise<object> {
         return tokenRepository.deleteUserTokenPairByParams(paramsForDelete);
     }
 
-    public async verifyToken(authToken: string, tokenType:string)
-        :Promise<IUserPayload> {
+    public async verifyToken(authToken: string, tokenType: string)
+        : Promise<IUserPayload> {
         let secretWord = config.SECRET_ACCESS_KEY;
 
         if (tokenType === TokenType.REFRESH) {
@@ -56,6 +56,29 @@ class TokenService {
         }
 
         return jwt.verify(authToken, secretWord as string) as IUserPayload;
+    }
+
+    public async generateActionToken(payload: IUserPayload): Promise<string> {
+        const actionToken = jwt.sign(payload, config.SECRET_PASSWORD_KEY as string, { expiresIn: config.EXPIRES_IN_ACTION });
+        return actionToken;
+    }
+
+    public async saveActionToken(userId: number, actionToken: string)
+        : Promise<IActionToken> {
+        const actionTokenFromDb = await actionTokenRepository.findActionTokenByUserId(userId);
+
+        if (actionTokenFromDb) {
+            actionTokenFromDb.actionToken = actionToken;
+
+            return actionTokenRepository.saveActionTokenToDB(actionTokenFromDb);
+        }
+
+        const actionTokenNew = await actionTokenRepository.saveActionTokenToDB({
+            actionToken,
+            userId,
+        });
+
+        return actionTokenNew;
     }
 }
 

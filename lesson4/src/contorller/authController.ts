@@ -1,9 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { COOKIE } from '../constants';
 import { IRequestExtended } from '../interfaces';
-import {
-    authService, emailService, tokenService, userService,
-} from '../services';
+import { authService, emailService, tokenService, userService, } from '../services';
 import { IUser } from '../entity';
 import { MESSAGE } from '../message';
 import { EmailActionEnum } from '../EmailInformation';
@@ -118,6 +116,34 @@ class AuthController {
                 accessToken,
                 user: req.user,
             });
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    public async sendMailUserWhoForgotPassword(req: IRequestExtended, res: Response, next: NextFunction) {
+        try {
+            const user = req.user as IUser;
+
+            const {
+                id,
+                email,
+            } = user;
+
+            const actionToken = await tokenService.generateActionToken({
+                userId: id,
+                userEmail: email,
+            });
+
+            await tokenService.saveActionToken(id, actionToken);
+
+            await emailService.sendMail(
+                email,
+                EmailActionEnum.FORGOT_PASSWORD,
+                { forgotPasswordUrl: `http://localhost:3000/passwordForgot?token=${actionToken}` }
+            );
+
+            res.json('Don\'t worry your password reset request was successful!!!');
         } catch (e) {
             next(e);
         }

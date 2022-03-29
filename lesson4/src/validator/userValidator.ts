@@ -69,6 +69,16 @@ export const loginDataValidator = Joi.object({
         }),
 });
 
+export const forgotPasswordValidator = Joi.object({
+    email: Joi.string()
+        .regex(CONSTANTS.EMAIL_REGEXP)
+        .required()
+        .trim()
+        .messages({
+            'string.pattern.base': 'Email not valid',
+        }),
+});
+
 export const userDataForUpdateValidator = Joi.object({
     phone: Joi.string()
         .required()
