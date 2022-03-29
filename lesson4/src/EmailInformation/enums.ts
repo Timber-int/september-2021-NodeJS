@@ -1,6 +1,8 @@
 export enum EmailActionEnum {
     // eslint-disable-next-line no-unused-vars
-    WELCOME,
+    LOGIN,
     // eslint-disable-next-line no-unused-vars
-    ACCOUNT_BLOCKED
+    LOGOUT,
+    // eslint-disable-next-line no-unused-vars
+    REGISTRATION,
 }

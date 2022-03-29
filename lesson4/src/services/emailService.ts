@@ -3,6 +3,7 @@ import EmailTemplates from 'email-templates';
 import path from 'path';
 import { config } from '../config';
 import { EmailActionEnum, emailInfo } from '../EmailInformation';
+import { CONSTANTS } from '../constants';
 
 class EmailService {
     templateRenderer = new EmailTemplates({
@@ -20,7 +21,9 @@ class EmailService {
             templateName,
         } = emailInfo[action];
 
-        Object.assign(context, { frontendUrl: 'https://google.com', someArt: 'https://ih1.redbubble.net/image.3290152445.8821/st,small,507x507-pad,600x600,f8f8f8.jpg' });
+        Object.assign(context, {
+            warShip: CONSTANTS.WAR_SHIP_URL,
+        });
 
         const html = await this.templateRenderer.render(templateName, context);
 
@@ -33,7 +36,7 @@ class EmailService {
             },
         });
 
-        emailTransporter.sendMail({
+        await emailTransporter.sendMail({
             to: userEmail,
             html,
             subject,

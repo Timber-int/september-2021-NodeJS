@@ -3,10 +3,16 @@ import { tokenService } from './tokenService';
 import { IUser } from '../entity';
 import { ITokenData } from '../interfaces';
 import { MESSAGE } from '../message';
+import { emailService } from './emailService';
+import { EmailActionEnum } from '../EmailInformation';
 
 class AuthService {
-    public async registration(body:IUser):Promise<ITokenData> {
-        const { email } = body;
+    public async registration(body: IUser): Promise<ITokenData> {
+        const {
+            email,
+            firstName,
+            lastName
+        } = body;
 
         const userFromDbWithEmail = await userService.getUserByEmail(email);
 
@@ -15,16 +21,31 @@ class AuthService {
         }
 
         const createdUser = await userService.createUser(body);
+
+        await emailService.sendMail(email, EmailActionEnum.REGISTRATION, {
+            firstName,
+            lastName,
+        });
+
         return this._getTokenData(createdUser);
     }
 
-    private async _getTokenData(userData: IUser):Promise<ITokenData> {
-        const { id, email } = userData;
+    private async _getTokenData(userData: IUser): Promise<ITokenData> {
+        const {
+            id,
+            email,
+        } = userData;
         const tokenPair = await tokenService.generateTokenPair(
-            { userId: id, userEmail: email },
+            {
+                userId: id,
+                userEmail: email,
+            },
         );
 
-        const { refreshToken, accessToken } = tokenPair;
+        const {
+            refreshToken,
+            accessToken
+        } = tokenPair;
 
         await tokenService.saveToken(id, refreshToken, accessToken);
 

@@ -20,6 +20,7 @@ class AuthController {
                     httpOnly: true,
                 },
             );
+
             res.json(data);
         } catch (e) {
             next(e);
@@ -32,11 +33,16 @@ class AuthController {
                 id,
                 email,
                 password: hashPassword,
+                firstName,
+                lastName,
             } = req.user as IUser;
 
             const { password } = req.body;
 
-            await emailService.sendMail(email, EmailActionEnum.WELCOME, { id });
+            await emailService.sendMail(email, EmailActionEnum.LOGIN, {
+                firstName,
+                lastName,
+            });
 
             await userService.compareUserPassword(password, hashPassword);
 
@@ -64,11 +70,21 @@ class AuthController {
 
     public async logout(req: IRequestExtended, res: Response, next: NextFunction) {
         try {
-            const { id } = req.user as IUser;
+            const {
+                id,
+                firstName,
+                lastName,
+                email,
+            } = req.user as IUser;
 
             res.clearCookie(COOKIE.nameRefreshToken);
 
             await tokenService.deleteUserTokenPair({ userId: id });
+
+            await emailService.sendMail(email, EmailActionEnum.LOGOUT, {
+                firstName,
+                lastName,
+            });
 
             res.json(`${MESSAGE.BY_USER} ${req.user?.firstName}`);
         } catch (e) {
