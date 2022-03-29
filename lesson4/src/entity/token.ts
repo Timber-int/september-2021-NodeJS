@@ -11,7 +11,7 @@ export interface IToken extends ICommonFields{
     userId:number
 }
 
-@Entity('token', { database: CONSTANTS.DATA_BASE })
+@Entity('tokens', { database: CONSTANTS.DATA_BASE })
 export class Token extends CommonFields implements IToken {
     @Column({
         type: 'varchar',
