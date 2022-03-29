@@ -11,7 +11,7 @@ class AuthService {
         const {
             email,
             firstName,
-            lastName
+            lastName,
         } = body;
 
         const userFromDbWithEmail = await userService.getUserByEmail(email);
@@ -44,7 +44,7 @@ class AuthService {
 
         const {
             refreshToken,
-            accessToken
+            accessToken,
         } = tokenPair;
 
         await tokenService.saveToken(id, refreshToken, accessToken);
