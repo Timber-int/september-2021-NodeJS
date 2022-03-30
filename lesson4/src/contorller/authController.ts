@@ -1,7 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import { COOKIE } from '../constants';
 import { IRequestExtended } from '../interfaces';
-import { authService, emailService, tokenService, userService } from '../services';
+import {
+    authService, emailService, tokenService, userService,
+} from '../services';
 import { IUser } from '../entity';
 import { MESSAGE } from '../message';
 import { EmailActionEnum } from '../EmailInformation';
@@ -160,13 +162,19 @@ class AuthController {
             const {
                 id,
                 firstName,
+                email,
+                lastName,
             } = user;
             await userService.updateById(id, req.body);
 
             await actionTokenRepository.deleteActionTokenByUserId(id);
 
-            res.json(`${firstName} ${MESSAGE.YOU_PASSWORD_UPDATED_SUCCESSFULLY}`);
+            await emailService.sendMail(email, EmailActionEnum.CHANGE_PASSWORD, {
+                firstName,
+                lastName,
+            });
 
+            res.json(`${firstName} ${MESSAGE.YOU_PASSWORD_UPDATED_SUCCESSFULLY}`);
         } catch (e) {
             next(e);
         }
