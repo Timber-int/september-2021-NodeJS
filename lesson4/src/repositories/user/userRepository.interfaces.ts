@@ -6,5 +6,6 @@ export interface IUserRepository {
     getUserByPhone(phone: string): Promise<IUser | undefined>
     getAllUsers():Promise<IUser[]>
     getUserById(id:number):Promise <IUser | undefined>
-    deleteById(id:number):Promise <any>
+    deleteById(id:number):Promise <object>
+    updateById(id: number, user: Partial<IUser>): Promise<object>
 }

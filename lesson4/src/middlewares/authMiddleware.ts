@@ -1,7 +1,7 @@
 import { NextFunction, Response } from 'express';
 import { tokenService, userService } from '../services';
 import { IRequestExtended } from '../interfaces';
-import { tokenRepository } from '../repositories';
+import { actionTokenRepository, tokenRepository } from '../repositories';
 import { CONSTANTS, TokenType } from '../constants';
 import { ErrorHandler } from '../errorHandler';
 import { MESSAGE } from '../message';
@@ -65,6 +65,42 @@ class AuthMiddleware {
             }
 
             req.user = userFromToken;
+
+            next();
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    public async checkActionToken(req: IRequestExtended, res: Response, next: NextFunction) {
+        try {
+            const actionToken = req.get(CONSTANTS.AUTHORIZATION);
+
+            if (!actionToken) {
+                next(new ErrorHandler(MESSAGE.NOT_TOKEN, STATUS.CODE_404));
+                return;
+            }
+
+            const {
+                userEmail,
+                userId,
+            } = await tokenService.verifyToken(actionToken, TokenType.ACTION);
+
+            const actionTokenFromDB = await actionTokenRepository.findActionTokenByUserId(userId);
+
+            if (!actionTokenFromDB) {
+                next(new ErrorHandler(MESSAGE.NOT_USER, STATUS.CODE_404));
+                return;
+            }
+
+            const userFromActionToken = await userService.getUserByEmail(userEmail);
+
+            if (!userFromActionToken) {
+                next(new ErrorHandler(MESSAGE.NOT_USER, STATUS.CODE_404));
+                return;
+            }
+
+            req.user = userFromActionToken;
 
             next();
         } catch (e) {

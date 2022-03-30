@@ -47,19 +47,10 @@ class UserRepository extends Repository<User> implements IUserRepository {
             .softDelete(id);
     }
 
-    public async updateById(id: number, data: Partial<IUser>): Promise<object> {
-        const {
-            email,
-            password,
-            phone,
-        } = data;
+    public async updateById(id: number, user: Partial<IUser>): Promise<object> {
         return getManager()
             .getRepository(User)
-            .update({ id }, {
-                email,
-                phone,
-                password,
-            });
+            .update({ id }, user);
     }
 }
 

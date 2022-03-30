@@ -1,4 +1,6 @@
-import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
+import {
+    Column, Entity, JoinColumn, OneToOne,
+} from 'typeorm';
 import { CONSTANTS } from '../constants';
 import { CommonFields, ICommonFields } from './commonFields';
 import { User } from './user';
@@ -26,4 +28,3 @@ export class ActionToken extends CommonFields implements IActionToken {
     @JoinColumn({ name: 'userId' })
         user: User;
 }
-

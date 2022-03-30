@@ -6,6 +6,7 @@ export const COOKIE = {
 export const TokenType = {
     ACCESS: 'ACCESS',
     REFRESH: 'REFRESH',
+    ACTION: 'ACTION',
 };
 
 export const CONSTANTS = {

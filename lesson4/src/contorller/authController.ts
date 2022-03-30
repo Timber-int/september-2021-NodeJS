@@ -1,10 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import { COOKIE } from '../constants';
 import { IRequestExtended } from '../interfaces';
-import { authService, emailService, tokenService, userService, } from '../services';
+import { authService, emailService, tokenService, userService } from '../services';
 import { IUser } from '../entity';
 import { MESSAGE } from '../message';
 import { EmailActionEnum } from '../EmailInformation';
+import { actionTokenRepository } from '../repositories';
 
 class AuthController {
     public async registration(req: Request, res: Response, next: NextFunction) {
@@ -140,10 +141,32 @@ class AuthController {
             await emailService.sendMail(
                 email,
                 EmailActionEnum.FORGOT_PASSWORD,
-                { forgotPasswordUrl: `http://localhost:3000/passwordForgot?token=${actionToken}` }
+                { forgotPasswordUrl: `http://localhost:3000/passwordForgot?token=${actionToken}` },
             );
 
-            res.json('Don\'t worry your password reset request was successful!!!');
+            res.json({
+                actionToken,
+                user: req.user,
+            });
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    public async setNewPasswordForUser(req: IRequestExtended, res: Response, next: NextFunction) {
+        try {
+            const user = req.user as IUser;
+
+            const {
+                id,
+                firstName,
+            } = user;
+            await userService.updateById(id, req.body);
+
+            await actionTokenRepository.deleteActionTokenByUserId(id);
+
+            res.json(`${firstName} ${MESSAGE.YOU_PASSWORD_UPDATED_SUCCESSFULLY}`);
+
         } catch (e) {
             next(e);
         }

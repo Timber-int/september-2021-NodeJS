@@ -38,7 +38,8 @@
     "prefer-regex-literals": "off",
     "function-paren-newline": "off",
     "max-len": ["error", {"code":  150}],
-    "no-shadow": "off"
+    "no-shadow": "off",
+    "no-param-reassign": "off"
   },
   "settings": {
     "import/resolver": {

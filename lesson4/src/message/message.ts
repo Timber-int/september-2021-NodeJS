@@ -20,4 +20,5 @@ export const MESSAGE = {
     DISLIKE: 'dislike',
     GOOD_DEAL: 'is good deal!!!',
     THANK_YOU_FOR: 'Thank you for',
+    YOU_PASSWORD_UPDATED_SUCCESSFULLY: ' password updated successfully',
 };

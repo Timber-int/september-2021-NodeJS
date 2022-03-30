@@ -17,6 +17,12 @@ class ActionTokenRepository extends Repository<ActionToken> implements IActionTo
             .getRepository(ActionToken)
             .findOne({ userId });
     }
+
+    public async deleteActionTokenByUserId(userId: number): Promise<object> {
+        return getManager()
+            .getRepository(ActionToken)
+            .delete({ userId });
+    }
 }
 
 export const actionTokenRepository = new ActionTokenRepository();

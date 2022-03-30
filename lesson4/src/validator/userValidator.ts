@@ -79,6 +79,16 @@ export const forgotPasswordValidator = Joi.object({
         }),
 });
 
+export const setForgotPasswordValidator = Joi.object({
+    password: Joi.string()
+        .regex(CONSTANTS.PASSWORD_REGEXP)
+        .required()
+        .trim()
+        .messages({
+            'string.pattern.base': 'Password not valid',
+        }),
+});
+
 export const userDataForUpdateValidator = Joi.object({
     phone: Joi.string()
         .required()

@@ -35,6 +35,7 @@ class AuthService {
             id,
             email,
         } = userData;
+
         const tokenPair = await tokenService.generateTokenPair(
             {
                 userId: id,
