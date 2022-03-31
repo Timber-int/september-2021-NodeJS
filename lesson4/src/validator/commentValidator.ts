@@ -2,14 +2,12 @@ import Joi from 'joi';
 
 export const checkIsCommentBodyValidator = Joi.object({
     text: Joi.string()
-        .alphanum()
-        .min(1)
-        .max(1000)
-        .trim()
+        .min(3)
+        .max(250)
         .required()
         .messages({
             'string.empty': '"text" Can not be empty',
-            'string.pattern.base': 'Enter only letter min 1 max 1000',
+            'string.pattern.base': 'Enter only letter min 3 max 250',
         }),
     authorId: Joi.number()
         .required()

@@ -2,24 +2,20 @@ import Joi from 'joi';
 
 export const checkIsPostBodyValidate = Joi.object({
     title: Joi.string()
-        .alphanum()
-        .min(10)
-        .max(500)
-        .trim()
+        .min(3)
+        .max(250)
         .required()
         .messages({
             'string.empty': '"title" Can not be empty',
-            'string.pattern.base': 'Enter only letter min 10 max 500',
+            'string.pattern.base': 'Enter only letter min 3 max 250',
         }),
     text: Joi.string()
-        .alphanum()
-        .min(20)
-        .max(5000)
-        .trim()
+        .min(3)
+        .max(250)
         .required()
         .messages({
             'string.empty': '"text" Can not be empty',
-            'string.pattern.base': 'Enter only letter min 20 max 5000',
+            'string.pattern.base': 'Enter only letter min 3 max 250',
         }),
     userId: Joi.number()
         .required(),
@@ -27,13 +23,11 @@ export const checkIsPostBodyValidate = Joi.object({
 
 export const checkIsPostBodyValidateForUpdate = Joi.object({
     text: Joi.string()
-        .alphanum()
-        .min(20)
-        .max(5000)
-        .trim()
+        .min(3)
+        .max(250)
         .required()
         .messages({
             'string.empty': '"title" Can not be empty',
-            'string.pattern.base': 'Enter only letter min 20 max 5000',
+            'string.pattern.base': 'Enter only letter min 3 max 250',
         }),
 });
