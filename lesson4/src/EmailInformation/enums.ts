@@ -9,4 +9,6 @@ export enum EmailActionEnum {
     FORGOT_PASSWORD,
     // eslint-disable-next-line no-unused-vars
     CHANGE_PASSWORD,
+    // eslint-disable-next-line no-unused-vars
+    SEND_SURPRISE_MESSAGE
 }

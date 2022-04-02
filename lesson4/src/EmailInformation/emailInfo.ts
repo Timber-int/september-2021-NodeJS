@@ -23,4 +23,9 @@ export const emailInfo = {
         subject: 'You password is change!!!',
         templateName: 'changePassword',
     },
+    [EmailActionEnum.SEND_SURPRISE_MESSAGE]: {
+        subject: 'Our sincere congratulations, we are glad that you are with us!!!',
+        templateName: 'surpriseMessage',
+    },
+
 };

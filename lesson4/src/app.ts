@@ -5,6 +5,7 @@ import { engine } from 'express-handlebars';
 import { createConnection } from 'typeorm';
 import { apiRouter } from './routes';
 import { config } from './config';
+import { cronRunner } from './cron';
 
 const app = express();
 app.use(express.json());
@@ -24,6 +25,7 @@ app.listen(PORT, async () => {
         const connection = await createConnection();
         if (connection) {
             console.log('Database connected...');
+            await cronRunner();
         }
     } catch (e) {
         if (e) {
