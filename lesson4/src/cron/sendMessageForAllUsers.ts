@@ -8,7 +8,7 @@ export const sendMessageForAllUsers = async () => {
         cron.schedule('0 22 * * 1-5', async () => {
             const users = await userRepositories.getAllUsers();
 
-            users.forEach(user => {
+            users.forEach((user) => {
                 emailService.sendMail(user.email, EmailActionEnum.SEND_SURPRISE_MESSAGE, {
                     firstName: user.firstName,
                     lastName: user.lastName,

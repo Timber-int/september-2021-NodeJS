@@ -1,7 +1,10 @@
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 import { EntityRepository, getManager, Repository } from 'typeorm';
 import { IUser, User } from '../../entity';
-
 import { IUserRepository } from './userRepository.interfaces';
+
+dayjs.extend(utc);
 
 @EntityRepository(User)
 class UserRepository extends Repository<User> implements IUserRepository {
@@ -16,7 +19,10 @@ class UserRepository extends Repository<User> implements IUserRepository {
             .getRepository(User)
             .findOne(
                 { email },
-                { relations: ['posts', 'comments'], where: { deletedAt: null } },
+                {
+                    relations: ['posts', 'comments'],
+                    where: { deletedAt: null }
+                },
             );
     }
 
@@ -25,7 +31,10 @@ class UserRepository extends Repository<User> implements IUserRepository {
             .getRepository(User)
             .findOne(
                 { phone },
-                { relations: ['posts', 'comments'], where: { deletedAt: null } },
+                {
+                    relations: ['posts', 'comments'],
+                    where: { deletedAt: null }
+                },
             );
     }
 
@@ -51,6 +60,19 @@ class UserRepository extends Repository<User> implements IUserRepository {
         return getManager()
             .getRepository(User)
             .update({ id }, user);
+    }
+
+    public async getNewUsers(): Promise<IUser[]> {
+        return getManager()
+            .getRepository(User)
+            .createQueryBuilder('user')
+            .where('user.createdAt >= :date', {
+                date: dayjs()
+                    .utc()
+                    .startOf('day')
+                    .format(),
+            })
+            .getMany();
     }
 }
 

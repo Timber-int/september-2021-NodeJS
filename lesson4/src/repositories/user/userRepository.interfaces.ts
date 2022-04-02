@@ -8,4 +8,5 @@ export interface IUserRepository {
     getUserById(id:number):Promise <IUser | undefined>
     deleteById(id:number):Promise <object>
     updateById(id: number, user: Partial<IUser>): Promise<object>
+    getNewUsers(): Promise<IUser[]>
 }
