@@ -55,6 +55,10 @@ class UserService {
         }
     }
 
+    public async getUserPagination(filterObject: Partial<IUser>, page: number, perPage: number) {
+        return userRepositories.getUserPagination(filterObject, perPage, page);
+    }
+
     private async _hashPassword(password: string): Promise<string> {
         return bcrypt.hash(password, 10);
     }

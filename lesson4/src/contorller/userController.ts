@@ -64,6 +64,23 @@ class UserController {
             next();
         }
     }
+
+    public async getUserPagination(req: Request, res: Response, next: NextFunction) {
+        try {
+            const {
+                page,
+                perPage,
+                ...other
+            } = req.query;
+
+            console.log(other);
+
+            const userPagination = await userService.getUserPagination(other, Number(page), Number(perPage));
+            res.json(userPagination);
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 export const userController = new UserController();

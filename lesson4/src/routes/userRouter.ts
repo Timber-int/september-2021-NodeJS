@@ -6,7 +6,8 @@ import { userDataForUpdateValidator } from '../validator';
 
 const router = Router();
 
-router.get('/', userController.getAllUsers);
+router.get('/', userController.getUserPagination);
+// router.get('/', userController.getAllUsers);
 // router.get('/:id', userController.getUserById);
 router.get('/:email', userController.getUserByEmail);
 
