@@ -3,11 +3,14 @@ import express from 'express';
 import path from 'path';
 import { engine } from 'express-handlebars';
 import { createConnection } from 'typeorm';
+import fileUpload from 'express-fileupload';
 import { apiRouter } from './routes';
 import { config } from './config';
 import { cronRunner } from './cron';
 
 const app = express();
+
+app.use(fileUpload());
 app.use(express.json());
 app.use(express.urlencoded());
 

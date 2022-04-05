@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
+import { UploadedFile } from 'express-fileupload';
 import { COOKIE } from '../constants';
 import { IRequestExtended } from '../interfaces';
 import {
-    authService, emailService, tokenService, userService,
+    authService, emailService, s3Service, tokenService, userService,
 } from '../services';
 import { IUser } from '../entity';
 import { MESSAGE } from '../message';
@@ -12,17 +13,30 @@ import { actionTokenRepository } from '../repositories';
 class AuthController {
     public async registration(req: Request, res: Response, next: NextFunction) {
         try {
-            const data = await authService.registration(req.body);
-            res.cookie(
-                COOKIE.nameRefreshToken,
-                data.refreshToken,
-                {
-                    maxAge: COOKIE.maxAgeRefreshToken,
-                    httpOnly: true,
-                },
-            );
+            const {
+                email,
+                firstName,
+                lastName,
+            } = req.body;
 
-            res.json(data);
+            const avatar = req.files?.avatar as UploadedFile;
+
+            const createdUser = await userService.createUser(req.body);
+
+            if (avatar) {
+                const sendData = await s3Service.uploadFile(avatar, 'user', createdUser.id);
+
+                console.log(sendData.Location);
+            }
+
+            await emailService.sendMail(email, EmailActionEnum.REGISTRATION, {
+                firstName,
+                lastName,
+            });
+
+            const tokenData = await authService.registration(createdUser);
+
+            res.json(tokenData);
         } catch (e) {
             next(e);
         }

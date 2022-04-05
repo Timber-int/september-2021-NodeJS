@@ -22,7 +22,7 @@ class UserRepository extends Repository<User> implements IUserRepository {
                 { email },
                 {
                     relations: ['posts', 'comments'],
-                    where: { deletedAt: null }
+                    where: { deletedAt: null },
                 },
             );
     }
@@ -34,7 +34,7 @@ class UserRepository extends Repository<User> implements IUserRepository {
                 { phone },
                 {
                     relations: ['posts', 'comments'],
-                    where: { deletedAt: null }
+                    where: { deletedAt: null },
                 },
             );
     }
@@ -94,7 +94,6 @@ class UserRepository extends Repository<User> implements IUserRepository {
             data: users,
         };
     }
-
 }
 
 export const userRepositories = new UserRepository();

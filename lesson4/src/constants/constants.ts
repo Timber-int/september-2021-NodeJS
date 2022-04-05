@@ -12,6 +12,7 @@ export const TokenType = {
 export const CONSTANTS = {
     AUTHORIZATION: 'Authorization',
     DATA_BASE: 'okten',
+
     PASSWORD_REGEXP: new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$%\\^&\\*])(?=.{8,128})'),
     EMAIL_REGEXP: new RegExp('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$'),
     PHONE_REGEXP: new RegExp('(?:(?:\\+?1\\s*(?:[.-]\\s*)?)?(?:(\\s*([2-9]1[02-9]|[2-9][02-8]1|'
@@ -20,4 +21,20 @@ export const CONSTANTS = {
         + '.?|extension)\\s*(\\d+)\\s*)?$'),
 
     WAR_SHIP_URL: 'https://i1.sndcdn.com/artworks-XLKV4GNJc61aNMTR-AjNydQ-t500x500.jpg',
+
+    PHOTO_MAX_SIZE: 2 * 1024 * 1024,
+    VIDEO_MAX_SIZE: 20 * 1024 * 1024,
+
+    PHOTOS_MIMETYPES: [
+        'image/gif', // .gif
+        'image/jpeg', // .jpg, .jpeg
+        'image/pjpeg', // .jpeg
+        'image/png', // .png
+        'image/webp', // .webp
+    ],
+
+    VIDEO_MIMETYPES: [
+        'video/mp4',
+        'video/x-msvideo',
+    ],
 };

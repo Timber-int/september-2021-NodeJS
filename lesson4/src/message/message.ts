@@ -21,4 +21,6 @@ export const MESSAGE = {
     GOOD_DEAL: 'is good deal!!!',
     THANK_YOU_FOR: 'Thank you for',
     YOU_PASSWORD_UPDATED_SUCCESSFULLY: ' password updated successfully',
+    TO_BIG_PHOTO_FILE: 'Photo file if to big',
+    WRONG_FILE_FORMAT: 'Wrong file format',
 };
