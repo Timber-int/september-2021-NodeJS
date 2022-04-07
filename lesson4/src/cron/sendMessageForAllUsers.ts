@@ -6,19 +6,18 @@ import { IUser } from '../entity';
 
 export const sendMessageForAllUsers = async () => {
     try {
-        cron.schedule('0 22 * * 1-5', async () => {
+        cron.schedule('5 0 * 8 *', async () => {
             const users = await userRepositories.getAllUsers();
 
-            [...users].map(async (user: IUser) => {
-                try {
+            await Promise.all([
+                [...users].map(async (user: IUser) => {
                     await emailService.sendMail(user.email, EmailActionEnum.SEND_SURPRISE_MESSAGE, {
                         firstName: user.firstName,
                         lastName: user.lastName,
                     });
-                } catch (e) {
-                    console.log(e);
-                }
-            });
+                }),
+            ])
+                .then((value: (Awaited<Promise<void>[]>)[]) => value);
         });
     } catch (e) {
         console.log(e);
