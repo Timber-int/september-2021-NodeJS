@@ -26,7 +26,7 @@ class FileMiddleware {
                 return;
             }
 
-            if (!CONSTANTS.PHOTOS_MIMETYPES.includes(mimetype)){
+            if (!CONSTANTS.PHOTOS_MIMETYPES.includes(mimetype)) {
                 next(new ErrorHandler(MESSAGE.WRONG_FILE_FORMAT));
                 return;
             }

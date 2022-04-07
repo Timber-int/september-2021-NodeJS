@@ -9,13 +9,9 @@ import {
 const router = Router();
 
 router.post('/registration', (req: IRequestExtended, res: Response, next: NextFunction) => {
-        req.chosenValidationType = userBodyForRegistrationValidator;
-        next();
-    },
-    authMiddleware.dataValidator,
-    userMiddleware.checkEmailAndPhoneExist,
-    fileMiddleware.checkUserAvatar,
-    authController.registration,
+    req.chosenValidationType = userBodyForRegistrationValidator;
+    next();
+}, authMiddleware.dataValidator, userMiddleware.checkEmailAndPhoneExist, fileMiddleware.checkUserAvatar, authController.registration,
 );
 router.post('/login',
     (req: IRequestExtended, res: Response, next: NextFunction) => {

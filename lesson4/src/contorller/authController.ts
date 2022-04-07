@@ -9,6 +9,7 @@ import { IUser } from '../entity';
 import { MESSAGE } from '../message';
 import { EmailActionEnum } from '../EmailInformation';
 import { actionTokenRepository } from '../repositories';
+import { passwordService } from '../services/passwordService';
 
 class AuthController {
     public async registration(req: Request, res: Response, next: NextFunction) {
@@ -73,10 +74,12 @@ class AuthController {
 
             await tokenService.saveToken(id, refreshToken, accessToken);
 
+            const normalizedUser = await passwordService.userNormalization(req.user);
+
             res.json({
                 refreshToken,
                 accessToken,
-                user: req.user,
+                user: normalizedUser,
             });
         } catch (e) {
             next(e);
@@ -128,10 +131,12 @@ class AuthController {
 
             await tokenService.saveToken(id, refreshToken, accessToken);
 
+            const normalizedUser = await passwordService.userNormalization(req.user);
+
             res.json({
                 refreshToken,
                 accessToken,
-                user: req.user,
+                user: normalizedUser,
             });
         } catch (e) {
             next(e);
@@ -160,9 +165,11 @@ class AuthController {
                 { forgotPasswordUrl: `http://localhost:3000/passwordForgot?token=${actionToken}` },
             );
 
+            const normalizedUser = await passwordService.userNormalization(req.user);
+
             res.json({
                 actionToken,
-                user: req.user,
+                user: normalizedUser,
             });
         } catch (e) {
             next(e);

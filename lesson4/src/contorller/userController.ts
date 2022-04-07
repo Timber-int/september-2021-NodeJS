@@ -3,6 +3,8 @@ import { userService } from '../services';
 import { STATUS } from '../errorsCode';
 import { MESSAGE } from '../message';
 import { ErrorHandler } from '../errorHandler';
+import { IUser } from '../entity';
+import { passwordService } from '../services/passwordService';
 
 class UserController {
     public async getUserByEmail(req: Request, res: Response, next: NextFunction) {
@@ -10,7 +12,10 @@ class UserController {
             const { email } = req.params;
 
             const user = await userService.getUserByEmail(email);
-            res.json(user);
+
+            const normalizedUser = await passwordService.userNormalization(user);
+
+            res.json(normalizedUser);
         } catch (e) {
             next(e);
         }
@@ -19,6 +24,11 @@ class UserController {
     public async getAllUsers(req: Request, res: Response, next: NextFunction) {
         try {
             const users = await userService.getAllUsers();
+
+            users.forEach((user: IUser) => {
+                passwordService.userNormalization(user);
+            });
+
             res.json(users);
         } catch (e) {
             next(e);
