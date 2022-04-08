@@ -10,14 +10,16 @@ export const sendMessageForAllUsers = async () => {
             const users = await userRepositories.getAllUsers();
 
             await Promise.allSettled([...users].map(async (user: IUser) => {
-                await emailService.sendMail(user.email, EmailActionEnum.SEND_SURPRISE_MESSAGE, {
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                });
-            }),
-            )
-                .then((value: PromiseSettledResult<Awaited<Promise<void>>>[]) => console.log(value))
-                .catch((e) => console.log(e));
+                    try {
+                        await emailService.sendMail(user.email, EmailActionEnum.SEND_SURPRISE_MESSAGE, {
+                            firstName: user.firstName,
+                            lastName: user.lastName,
+                        });
+                    } catch (e) {
+                        console.log(e);
+                    }
+                }),
+            );
         });
     } catch (e) {
         console.log(e);
