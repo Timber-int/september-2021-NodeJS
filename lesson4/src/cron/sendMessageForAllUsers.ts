@@ -15,7 +15,6 @@ export const sendMessageForAllUsers = async () => {
                         firstName: user.firstName,
                         lastName: user.lastName,
                     });
-
                 } catch (e) {
                     console.log(e);
                 }

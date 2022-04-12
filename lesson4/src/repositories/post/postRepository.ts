@@ -19,8 +19,10 @@ class PostRepository extends Repository<Post> implements IPostRepository {
         return post;
     }
 
-    public async getPostById(id:number):Promise<IPost | undefined> {
-        const post = await getManager().getRepository(Post).findOne({ id });
+    public async getPostById(id: number): Promise<IPost | undefined> {
+        const post = await getManager()
+            .getRepository(Post)
+            .findOne({ id });
         return post;
     }
 
@@ -40,7 +42,7 @@ class PostRepository extends Repository<Post> implements IPostRepository {
         return posts;
     }
 
-    public async updatePostById(id:number, text: string): Promise<object> {
+    public async updatePostById(id: number, text: string): Promise<object> {
         const post = await getManager()
             .getRepository(Post)
             .update({ id }, {
