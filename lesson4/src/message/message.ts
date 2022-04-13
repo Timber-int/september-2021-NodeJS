@@ -23,4 +23,7 @@ export const MESSAGE = {
     YOU_PASSWORD_UPDATED_SUCCESSFULLY: ' password updated successfully',
     TO_BIG_PHOTO_FILE: 'Photo file if to big',
     WRONG_FILE_FORMAT: 'Wrong file format',
+    NOT_TEACHER: 'Not teacher',
+    STUDENT_DELETED: 'STUDENT DELETED',
+    STUDENT_UPDATED: 'STUDENT UPDATED',
 };

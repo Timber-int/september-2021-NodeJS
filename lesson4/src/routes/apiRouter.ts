@@ -4,6 +4,8 @@ import { authRouter } from './authRouter';
 import { postRouter } from './postRouter';
 import { commentRouter } from './commentRouter';
 import { STATUS } from '../errorsCode';
+import { studentRouter } from './studentRouter';
+import { teacherRouter } from './teacherRouter';
 
 const router = Router();
 
@@ -11,6 +13,8 @@ router.use('/users', userRouter);
 router.use('/posts', postRouter);
 router.use('/comments', commentRouter);
 router.use('/auth', authRouter);
+router.use('/students', studentRouter);
+router.use('/teachers', teacherRouter);
 
 // @ts-ignore
 router.use('*', (err, req, res, next) => {
