@@ -303,7 +303,9 @@
       "post": {
         "description": "Set new password",
         "operationId": "forgot/password/set",
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "parameters": [
           {
             "type": "string",
@@ -342,8 +344,477 @@
           }
         }
       }
+    },
+    "/posts/": {
+      "get": {
+        "description": "getPosts",
+        "operationId": "getPosts",
+        "tags": [
+          "Posts"
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/post"
+              }
+            },
+            "description": "Get all posts"
+          },
+          "400": {
+            "description": "Error status_code 400",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "404": {
+            "description": "Error status_code 404",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/posts/{id}/": {
+      "get": {
+        "operationId": "getPost",
+        "description": "getPost",
+        "tags": [
+          "Posts"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "required": true,
+            "name": "id",
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post": {
+                  "$ref": "#/definitions/post"
+                }
+              }
+            },
+            "description": "Get post by id"
+          },
+          "400": {
+            "description": "Error status_code 400",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "404": {
+            "description": "Error status_code 404",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/posts": {
+      "post": {
+        "description": "createPost",
+        "operationId": "createPost",
+        "tags": [
+          "Posts"
+        ],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "title",
+            "in": "body",
+            "pattern": "Hello dear user great to see you again",
+            "required": true,
+            "uniqueItems": true
+          },
+          {
+            "type": "string",
+            "name": "text",
+            "in": "body",
+            "pattern": "Велика Британія запровадила кримінальне покарання проти будь-якого російського літака у її повітряному просторі",
+            "required": true
+          },
+          {
+            "type": "number",
+            "name": "userId",
+            "required": true,
+            "in": "body",
+            "description": "Foreign key for user"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post": {
+                  "$ref": "#/definitions/post"
+                }
+              }
+            },
+            "description": "Create post"
+          },
+          "400": {
+            "description": "Error status_code 400",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "404": {
+            "description": "Error status_code 404",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/posts/{id}": {
+      "put": {
+        "description": "updatePost",
+        "operationId": "updatePost",
+        "tags": [
+          "Posts"
+        ],
+        "parameters": [
+          {
+            "type": "number",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "default": 2
+          },
+          {
+            "type": "string",
+            "name": "text",
+            "pattern": "Велика Британія запровадила кримінальне покарання проти будь-якого російського літака у її повітряному просторі",
+            "in": "body",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post": {
+                  "$ref": "#/definitions/post"
+                }
+              }
+            },
+            "description": "Update post"
+          },
+          "400": {
+            "description": "Error status_code 400",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "404": {
+            "description": "Error status_code 404",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/comments/": {
+      "get": {
+        "description": "getAllComments",
+        "operationId": "getAllComments",
+        "tags": [
+          "Comments"
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/comment"
+              }
+            },
+            "description": "getAllComments"
+          },
+          "400": {
+            "description": "Error status_code 400",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "404": {
+            "description": "Error status_code 404",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/comments/{id}": {
+      "get": {
+        "description": "getCommentById",
+        "operationId": "getCommentById",
+        "tags": [
+          "Comments"
+        ],
+        "parameters": [
+          {
+            "type": "number",
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "comment": {
+                  "$ref": "#/definitions/comment"
+                }
+              }
+            },
+            "description": "getCommentById"
+          },
+          "400": {
+            "description": "Error status_code 400",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "404": {
+            "description": "Error status_code 404",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/comments": {
+      "post": {
+        "description": "createComment",
+        "operationId": "createComment",
+        "tags": [
+          "Comments"
+        ],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "text",
+            "required": true,
+            "in": "body",
+            "pattern": "All will by fine!!!"
+          },
+          {
+            "type": "number",
+            "name": "authorId",
+            "in": "body",
+            "required": true,
+            "description": "Foreign key for User"
+          },
+          {
+            "type": "number",
+            "name": "postId",
+            "in": "body",
+            "required": true,
+            "description": "Foreign key for Post"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "comment": {
+                  "$ref": "#/definitions/comment"
+                }
+              }
+            },
+            "description": "createComments"
+          },
+          "400": {
+            "description": "Error status_code 400",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "404": {
+            "description": "Error status_code 404",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/commnets/action": {
+      "post": {
+        "description": "Choose action like or dislike",
+        "operationId": "action",
+        "tags": [
+          "Comments"
+        ],
+        "parameters": [
+          {
+            "type": "number",
+            "in": "body",
+            "name": "commentId",
+            "required": true
+          },
+          {
+            "type": "string",
+            "in": "body",
+            "name": "action",
+            "required": true,
+            "description": "Set action like or dislike"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "string",
+              "pattern": "dislike is good deal!!!"
+            },
+            "description": "Choose action"
+          },
+          "400": {
+            "description": "Error status_code 400",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "404": {
+            "description": "Error status_code 404",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "description": "getAllUsers",
+        "operationId": "getAllUsers",
+        "tags": [
+          "Users"
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/user"
+              }
+            },
+            "description": "getAllUsers"
+          },
+          "400": {
+            "description": "Error status_code 400",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "404": {
+            "description": "Error status_code 404",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/users/{email}": {
+      "get": {
+        "description": "getUserByEmail",
+        "operationId": "getUserByEmail",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "type": "string",
+            "in": "path",
+            "name": "email",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "$ref": "#/definitions/user"
+                }
+              }
+            },
+            "description": "getUserByEmail"
+          },
+          "400": {
+            "description": "Error status_code 400",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "404": {
+            "description": "Error status_code 404",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "delete": {
+        "description": "deleteUserById",
+        "operationId": "deleteUserById",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "type": "number",
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "string",
+              "example": "User deleted successfully"
+            },
+            "description": "deleteUserById"
+          },
+          "400": {
+            "description": "Error status_code 400",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "404": {
+            "description": "Error status_code 404",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
     }
-
   },
   "definitions": {
     "user": {
@@ -413,7 +884,7 @@
         }
       }
     },
-    "comments": {
+    "comment": {
       "type": "object",
       "properties": {
         "id": {
