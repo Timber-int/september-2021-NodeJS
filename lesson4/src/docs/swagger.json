@@ -1,0 +1,197 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "September 2021",
+    "description": "Project documentation",
+    "version": "0.1",
+    "contact": {
+      "email": "timoty01@ukr.net",
+      "name": "Slobodianyk Artem"
+    }
+  },
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "description": "Login",
+        "operationId": "login",
+        "tags": [
+          "Auth"
+        ],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "email",
+            "in": "body",
+            "pattern": "timslovfoll@gmail.com",
+            "required": true
+          },
+          {
+            "type": "string",
+            "name": "password",
+            "in": "body",
+            "pattern": "#$E12312Erwqe",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accessToken": {
+                  "type": "string",
+                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE0LCJ1c2VyRW1haWwiOiJ0aW1zbG92Zm9sbEBnbWFpbC5jb20iLCJpYXQiOjE2NDk5MTY2ODMsImV4cCI6MTY0OTkxNzU4M30.qg6iFhPDP2M9MQzYNycWM7nk1LtQxNTso5lpGyu6MD8"
+                },
+                "refreshToken": {
+                  "type": "string",
+                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE0LCJ1c2VyRW1haWwiOiJ0aW1zbG92Zm9sbEBnbWFpbC5jb20iLCJpYXQiOjE2NDk5MTY2ODMsImV4cCI6MTY1MDAwMzA4M30.GW1wP1suLkouGTCXZrHSLaz-uj-NBz9zC4Y_-yZevBY"
+                },
+                "user": {
+                  "$ref": "#/definitions/user"
+                }
+              }
+            },
+            "description": "Successfully login response"
+          },
+          "400": {
+            "description": "Error statusCode 400",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "404": {
+            "description": "Error statusCode 404",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    }
+
+  },
+  "definitions": {
+    "user": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "example": 1
+        },
+        "firstName": {
+          "type": "string",
+          "example": "Stepan"
+        },
+        "lastName": {
+          "type": "string",
+          "example": "Orlov"
+        },
+        "age": {
+          "type": "number",
+          "example": 18
+        },
+        "phone": {
+          "type": "string",
+          "example": "+38099559693943"
+        },
+        "email": {
+          "type": "string",
+          "example": "timslovfoll@gmail.com"
+        },
+        "createdAt": {
+          "type": "string",
+          "example": "2022-04-11T14:57:23.471Z"
+        },
+        "deletedAt": {
+          "type": "string",
+          "default": null
+        }
+      }
+    },
+    "post": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "example": 1
+        },
+        "createdAt": {
+          "type": "string",
+          "example": "2022-04-11T14:57:23.471Z"
+        },
+        "deletedAt": {
+          "type": "string",
+          "default": null
+        },
+        "title": {
+          "type": "string",
+          "example": "Sky is closed"
+        },
+        "text": {
+          "type": "string",
+          "example": "Велика Британія запровадила кримінальне покарання проти будь-якого російського літака у її повітряному просторі.  «Ми придушимо здатність друзів Путіна продовжувати жити нормальним життям, поки гинуть тисячі безневинних людей», — завив він"
+        },
+        "userId": {
+          "type": "number",
+          "example": 5,
+          "description": "Foreign fey for User"
+        }
+      }
+    },
+    "comments": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "example": 1
+        },
+        "createdAt": {
+          "type": "string",
+          "example": "2022-04-11T14:57:23.471Z"
+        },
+        "deletedAt": {
+          "type": "string",
+          "default": null
+        },
+        "text": {
+          "type": "string",
+          "example": "Glory to Ukraine!!!"
+        },
+        "authorId": {
+          "type": "number",
+          "example": 1,
+          "description": "Foreign fey for User"
+        },
+        "postId": {
+          "type": "number",
+          "example": 1,
+          "description": "Foreign fey for Post"
+        },
+        "like": {
+          "type": "number",
+          "example": 1,
+          "default": 0
+        },
+        "dislike": {
+          "type": "number",
+          "example": 1,
+          "default": 0
+        }
+      }
+    },
+    "errorResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string",
+          "example": "Bad request",
+          "description": "Standard error response"
+        }
+      }
+    }
+  }
+}
+
