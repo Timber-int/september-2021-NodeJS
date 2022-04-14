@@ -7,6 +7,7 @@ import { commentRouter } from './commentRouter';
 import { STATUS } from '../errorsCode';
 import { studentRouter } from './studentRouter';
 import { teacherRouter } from './teacherRouter';
+// eslint-disable-next-line import/extensions
 import docs from '../docs/swagger.json';
 
 const router = Router();

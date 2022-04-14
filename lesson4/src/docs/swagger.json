@@ -23,7 +23,8 @@
             "name": "email",
             "in": "body",
             "pattern": "timslovfoll@gmail.com",
-            "required": true
+            "required": true,
+            "uniqueItems": true
           },
           {
             "type": "string",
@@ -54,13 +55,287 @@
             "description": "Successfully login response"
           },
           "400": {
-            "description": "Error statusCode 400",
+            "description": "Error status_code 400",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "404": {
-            "description": "Error statusCode 404",
+            "description": "Error status_code 404",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/auth/registration": {
+      "post": {
+        "description": "Registration",
+        "operationId": "registration",
+        "tags": [
+          "Auth"
+        ],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "firstName",
+            "in": "body",
+            "pattern": "Semen",
+            "required": true
+          },
+          {
+            "type": "string",
+            "name": "lastName",
+            "in": "body",
+            "pattern": "Orlov",
+            "required": true
+          },
+          {
+            "type": "number",
+            "name": "age",
+            "in": "body",
+            "pattern": 56
+          },
+          {
+            "type": "string",
+            "name": "email",
+            "in": "body",
+            "pattern": "timslovfoll@gmail.com",
+            "required": true,
+            "uniqueItems": true
+          },
+          {
+            "type": "string",
+            "name": "password",
+            "in": "body",
+            "pattern": "#$E12312Erwqe",
+            "required": true
+          },
+          {
+            "type": "string",
+            "name": "phone",
+            "in": "body",
+            "pattern": "+38099559693943",
+            "required": true,
+            "uniqueItems": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accessToken": {
+                  "type": "string",
+                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE0LCJ1c2VyRW1haWwiOiJ0aW1zbG92Zm9sbEBnbWFpbC5jb20iLCJpYXQiOjE2NDk5MTY2ODMsImV4cCI6MTY0OTkxNzU4M30.qg6iFhPDP2M9MQzYNycWM7nk1LtQxNTso5lpGyu6MD8"
+                },
+                "refreshToken": {
+                  "type": "string",
+                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE0LCJ1c2VyRW1haWwiOiJ0aW1zbG92Zm9sbEBnbWFpbC5jb20iLCJpYXQiOjE2NDk5MTY2ODMsImV4cCI6MTY1MDAwMzA4M30.GW1wP1suLkouGTCXZrHSLaz-uj-NBz9zC4Y_-yZevBY"
+                },
+                "userId": {
+                  "type": "number",
+                  "example": 15
+                },
+                "userEmail": {
+                  "type": "string",
+                  "example": "timslovfoldl@gmail.com"
+                }
+              }
+            },
+            "description": "Successfully registration"
+          },
+          "400": {
+            "description": "Error status_code 400",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "404": {
+            "description": "Error status_code 404",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "description": "Logout",
+        "operationId": "logout",
+        "tags": [
+          "Auth"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Use access_token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "string",
+              "pattern": "We will be waiting for you later Stepan"
+            },
+            "description": "Successfully registration"
+          },
+          "400": {
+            "description": "Error status_code 400",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "404": {
+            "description": "Error status_code 404",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "description": "Refresh",
+        "operationId": "refresh",
+        "tags": [
+          "Auth"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Use refresh_token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accessToken": {
+                  "type": "string",
+                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE0LCJ1c2VyRW1haWwiOiJ0aW1zbG92Zm9sbEBnbWFpbC5jb20iLCJpYXQiOjE2NDk5MTY2ODMsImV4cCI6MTY0OTkxNzU4M30.qg6iFhPDP2M9MQzYNycWM7nk1LtQxNTso5lpGyu6MD8"
+                },
+                "refreshToken": {
+                  "type": "string",
+                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE0LCJ1c2VyRW1haWwiOiJ0aW1zbG92Zm9sbEBnbWFpbC5jb20iLCJpYXQiOjE2NDk5MTY2ODMsImV4cCI6MTY1MDAwMzA4M30.GW1wP1suLkouGTCXZrHSLaz-uj-NBz9zC4Y_-yZevBY"
+                },
+                "user": {
+                  "$ref": "#/definitions/user"
+                }
+              }
+            },
+            "description": "Successfully refresh"
+          },
+          "400": {
+            "description": "Error status_code 400",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "404": {
+            "description": "Error status_code 404",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/auth/forgot/password": {
+      "post": {
+        "description": "Forgot password",
+        "operationId": "forgot/password",
+        "tags": [
+          "Auth"
+        ],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "email",
+            "in": "body",
+            "pattern": "timslovfoll@gmail.com",
+            "required": true,
+            "uniqueItems": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "actionToken": {
+                  "type": "string",
+                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE0LCJ1c2VyRW1haWwiOiJ0aW1zbG92Zm9sbEBnbWFpbC5jb20iLCJpYXQiOjE2NDk5MjcwMTQsImV4cCI6MTY1MDM1OTAxNH0.Id8v8ybg1ka9DqVaBhJqJyLaEWHlmBmM3Yb6GCYZf3M"
+                },
+                "user": {
+                  "$ref": "#/definitions/user"
+                }
+              }
+            },
+            "description": "Successfully send message user who wont change your password"
+          },
+          "400": {
+            "description": "Error status_code 400",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "404": {
+            "description": "Error status_code 404",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/auth/forgot/password/set": {
+      "post": {
+        "description": "Set new password",
+        "operationId": "forgot/password/set",
+        "tags": ["Auth"],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "password",
+            "in": "body",
+            "pattern": "#$E12312Erwqe",
+            "required": true
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Use action_token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "string",
+              "pattern": "Stepan  password updated successfully"
+            },
+            "description": "Successfully change user password!!!"
+          },
+          "400": {
+            "description": "Error status_code 400",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "404": {
+            "description": "Error status_code 404",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
