@@ -814,6 +814,69 @@
           }
         }
       }
+    },
+    "/users/{id}/": {
+      "put": {
+        "description": "updateUserById",
+        "operationId": "updateUserById",
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "type": "number",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "name": "email",
+            "in": "body",
+            "pattern": "timslovfoll@gmail.com",
+            "required": true,
+            "uniqueItems": true
+          },
+          {
+            "type": "string",
+            "name": "password",
+            "in": "body",
+            "pattern": "#$E12312Erwqe",
+            "required": true
+          },
+          {
+            "type": "string",
+            "name": "phone",
+            "in": "body",
+            "pattern": "+38099559693943",
+            "required": true,
+            "uniqueItems": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "$ref": "#/definitions/user"
+                }
+              }
+            },
+            "description": "updateUserById"
+          },
+          "400": {
+            "description": "Error status_code 400",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "404": {
+            "description": "Error status_code 404",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
