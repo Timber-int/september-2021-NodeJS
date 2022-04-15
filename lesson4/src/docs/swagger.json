@@ -21,7 +21,7 @@
           {
             "type": "string",
             "name": "email",
-            "in": "body",
+            "in": "formData",
             "pattern": "timslovfoll@gmail.com",
             "required": true,
             "uniqueItems": true
@@ -29,7 +29,7 @@
           {
             "type": "string",
             "name": "password",
-            "in": "body",
+            "in": "formData",
             "pattern": "#$E12312Erwqe",
             "required": true
           }
@@ -80,27 +80,27 @@
           {
             "type": "string",
             "name": "firstName",
-            "in": "body",
+            "in": "formData",
             "pattern": "Semen",
             "required": true
           },
           {
             "type": "string",
             "name": "lastName",
-            "in": "body",
+            "in": "formData",
             "pattern": "Orlov",
             "required": true
           },
           {
             "type": "number",
             "name": "age",
-            "in": "body",
+            "in": "formData",
             "pattern": 56
           },
           {
             "type": "string",
             "name": "email",
-            "in": "body",
+            "in": "formData",
             "pattern": "timslovfoll@gmail.com",
             "required": true,
             "uniqueItems": true
@@ -108,14 +108,14 @@
           {
             "type": "string",
             "name": "password",
-            "in": "body",
+            "in": "formData",
             "pattern": "#$E12312Erwqe",
             "required": true
           },
           {
             "type": "string",
             "name": "phone",
-            "in": "body",
+            "in": "formData",
             "pattern": "+38099559693943",
             "required": true,
             "uniqueItems": true
@@ -262,8 +262,7 @@
           {
             "type": "string",
             "name": "email",
-            "in": "body",
-            "pattern": "timslovfoll@gmail.com",
+            "in": "formData",
             "required": true,
             "uniqueItems": true
           }
@@ -310,7 +309,7 @@
           {
             "type": "string",
             "name": "password",
-            "in": "body",
+            "in": "formData",
             "pattern": "#$E12312Erwqe",
             "required": true
           },
@@ -430,7 +429,7 @@
           {
             "type": "string",
             "name": "title",
-            "in": "body",
+            "in": "formData",
             "pattern": "Hello dear user great to see you again",
             "required": true,
             "uniqueItems": true
@@ -438,7 +437,7 @@
           {
             "type": "string",
             "name": "text",
-            "in": "body",
+            "in": "formData",
             "pattern": "Велика Британія запровадила кримінальне покарання проти будь-якого російського літака у її повітряному просторі",
             "required": true
           },
@@ -446,7 +445,7 @@
             "type": "number",
             "name": "userId",
             "required": true,
-            "in": "body",
+            "in": "formData",
             "description": "Foreign key for user"
           }
         ],
@@ -496,7 +495,7 @@
             "type": "string",
             "name": "text",
             "pattern": "Велика Британія запровадила кримінальне покарання проти будь-якого російського літака у її повітряному просторі",
-            "in": "body",
+            "in": "formData",
             "required": true
           }
         ],
@@ -613,20 +612,20 @@
             "type": "string",
             "name": "text",
             "required": true,
-            "in": "body",
+            "in": "formData",
             "pattern": "All will by fine!!!"
           },
           {
             "type": "number",
             "name": "authorId",
-            "in": "body",
+            "in": "formData",
             "required": true,
             "description": "Foreign key for User"
           },
           {
             "type": "number",
             "name": "postId",
-            "in": "body",
+            "in": "formData",
             "required": true,
             "description": "Foreign key for Post"
           }
@@ -668,13 +667,13 @@
         "parameters": [
           {
             "type": "number",
-            "in": "body",
+            "in": "formData",
             "name": "commentId",
             "required": true
           },
           {
             "type": "string",
-            "in": "body",
+            "in": "formData",
             "name": "action",
             "required": true,
             "description": "Set action like or dislike"
@@ -830,7 +829,7 @@
           {
             "type": "string",
             "name": "email",
-            "in": "body",
+            "in": "formData",
             "pattern": "timslovfoll@gmail.com",
             "required": true,
             "uniqueItems": true
@@ -838,14 +837,14 @@
           {
             "type": "string",
             "name": "password",
-            "in": "body",
+            "in": "formData",
             "pattern": "#$E12312Erwqe",
             "required": true
           },
           {
             "type": "string",
             "name": "phone",
-            "in": "body",
+            "in": "formData",
             "pattern": "+38099559693943",
             "required": true,
             "uniqueItems": true
