@@ -4,11 +4,11 @@
   "description": "",
   "main": "src/app.ts",
   "scripts": {
-    "start": "../node_modules/.bin/rimraf dist && copyfiles -f src/emailTemplates/*.* dist/emailTemplates/ && copyfiles -f src/docs/*.json dist/docs/ && tsc-watch --onSuccess \\\"nodemon ./src/app.ts\\\"",
-    "lint": "../node_modules/.bin/eslint --cache --ext .js,.ts src",
+    "start": "rimraf dist && copyfiles -f src/emailTemplates/*.* dist/emailTemplates/ && copyfiles -f src/docs/*.json dist/docs/ && tsc-watch --onSuccess \"nodemon ./src/app.ts\"",
+    "lint": "eslint --cache --ext .js,.ts src",
     "lint:fix": "npm run lint -- --fix",
-    "typeorm": "node -r ts-node/register ../node_modules/typeorm/cli.js",
-    "migration:generate": "../node_modules/.bin/typeorm migration:create -n",
+    "typeorm": "node -r ts-node/register ./node_modules/typeorm/cli.js",
+    "migration:generate": "typeorm migration:create -n",
     "migration:run": "npm run typeorm migration:run",
     "migration:revert": "npm run typeorm migration:revert"
   },

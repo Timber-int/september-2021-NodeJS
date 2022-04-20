@@ -1,6 +1,6 @@
 FROM node:16-alpine
 
-MAINTAINER SomeDev
+MAINTAINER Timber
 
 RUN apk add bash
 
