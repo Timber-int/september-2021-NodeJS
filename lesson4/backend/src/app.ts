@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import express from 'express';
-import mongoose from 'mongoose';
+// import mongoose from 'mongoose';
 import path from 'path';
 import { engine } from 'express-handlebars';
 import { createConnection } from 'typeorm';
@@ -19,7 +19,7 @@ app.set('view engine', '.hbs');
 app.engine('.hbs', engine({ defaultLayout: false }));
 app.set('views', path.join(__dirname, 'emailTemplates'));
 
-mongoose.connect('mongodb://localhost:27017/School');
+// mongoose.connect('mongodb://localhost:27017/School');
 
 app.use(apiRouter);
 
