@@ -25,10 +25,10 @@ const UserDetailsPage = () => {
             <div>Role: {role}</div>
             <div>
                 {
-                    posts ? <div>Created Posts: {posts.map(post => <UserPost key={post.id} post={post}/>)}</div> : <></>
+                    posts && posts.length ? <div>Created Posts: {posts.map(post => <UserPost key={post.id} post={post}/>)}</div> : <></>
                 }
                 {
-                    comments ? <div>Created Comments: {comments.map(comment => <UserComment key={comment.id} comment={comment}/>)}</div> : <></>
+                    comments && comments.length ? <div>Created Comments: {comments.map(comment => <UserComment key={comment.id} comment={comment}/>)}</div> : <></>
                 }
             </div>
 

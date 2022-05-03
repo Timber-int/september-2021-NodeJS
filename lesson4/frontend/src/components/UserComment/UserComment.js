@@ -13,7 +13,7 @@ const UserComment = ({ comment }) => {
                 <span>👍 {like}</span>
                 <span>👎 {dislike}</span>
                 <div>
-                    <text>{text}</text>
+                    {text}
                 </div>
             </div>
         </div>

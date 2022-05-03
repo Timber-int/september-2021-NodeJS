@@ -31,7 +31,7 @@ export const userBodyForRegistrationValidator = Joi.object({
         }),
     phone: Joi.string()
         .required()
-        .regex(CONSTANTS.PHONE_REGEXP)
+        // .regex(CONSTANTS.PHONE_REGEXP)
         .messages({
             'string.pattern.base': 'Phone not valid',
         }),

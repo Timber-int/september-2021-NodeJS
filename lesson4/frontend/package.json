@@ -17,7 +17,10 @@
     "axios": "^0.27.2"
   },
   "devDependencies": {
-    "@types/react-router-dom": "^5.3.3"
+    "@types/react-router-dom": "^5.3.3",
+    "joi": "^17.6.0",
+    "npm-watch": "^0.11.0",
+    "@hookform/resolvers": "^2.8.5"
   },
   "scripts": {
     "start": "react-scripts start",
