@@ -12,11 +12,11 @@ import { passwordService } from '../services/passwordService';
 class AuthController {
     public async registration(req: Request, res: Response, next: NextFunction): Promise<void | Error> {
         try {
-            const {
-                email,
-                firstName,
-                lastName,
-            } = req.body;
+            // const {
+            //     email,
+            //     firstName,
+            //     lastName,
+            // } = req.body;
 
             const avatar = req.files?.avatar as UploadedFile;
 
@@ -29,10 +29,10 @@ class AuthController {
                 // console.log(sendData.Location);
             }
 
-            await emailService.sendMail(email, EmailActionEnum.REGISTRATION, {
-                firstName,
-                lastName,
-            });
+            // await emailService.sendMail(email, EmailActionEnum.REGISTRATION, {
+            //     firstName,
+            //     lastName,
+            // });
 
             const tokenData = await authService.registration(createdUser);
 
@@ -48,16 +48,16 @@ class AuthController {
                 id,
                 email,
                 password: hashPassword,
-                firstName,
-                lastName,
+                // firstName,
+                // lastName,
             } = req.user as IUser;
 
             const { password } = req.body;
 
-            await emailService.sendMail(email, EmailActionEnum.LOGIN, {
-                firstName,
-                lastName,
-            });
+            // await emailService.sendMail(email, EmailActionEnum.LOGIN, {
+            //     firstName,
+            //     lastName,
+            // });
 
             await userService.compareUserPassword(password, hashPassword);
 

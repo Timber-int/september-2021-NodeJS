@@ -1,0 +1,37 @@
+.registration_form_container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10%;
+}
+
+span {
+    color: red;
+}
+
+.registration_form {
+    background-color: #39445a;
+    padding: 10px;
+    border-radius: 5px;
+    color: #2E94E3;
+    font-size: 18px;
+}
+
+.registration_form > div {
+    margin-top: 5px;
+}
+
+.registration_button {
+    border: 2px solid #2E94E3;
+    border-radius: 5px;
+    background: #39445a;
+    color: #ffffff;
+    height: 80%;
+    font-size: 18px;
+    width: 100%;
+    margin-top: 10px;
+}
+.registration_button:hover {
+    color: #2E94E3;
+    cursor: pointer;
+}

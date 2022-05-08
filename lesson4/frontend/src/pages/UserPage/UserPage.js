@@ -6,6 +6,7 @@ const UserPage = () => {
     return (
         <div>
             <Users/>
+            <hr/>
             <Outlet/>
         </div>
     );

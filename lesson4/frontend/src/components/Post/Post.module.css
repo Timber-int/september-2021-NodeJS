@@ -1,0 +1,28 @@
+.post_box {
+    width: 25%;
+    margin: 10px;
+    height: 80px;
+    overflow: hidden;
+    overflow-y: auto;
+    border-radius: 5px;
+    border: 1px solid #39445a;
+    padding: 5px;
+    font-size: 18px;
+    color: #39445a;
+    background-color: #c6ff00;
+}
+
+.post_box_title {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.post_box_text {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-size: 16px;
+    margin-top: 5px;
+}

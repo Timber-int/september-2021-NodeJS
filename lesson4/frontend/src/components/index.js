@@ -4,3 +4,6 @@ export * from './User/User';
 export * from './UserPost/UserPost';
 export * from './UserComment/UserComment';
 export * from './RegistrationForm/RegistrationForm';
+export * from './Posts/Posts';
+export * from './Post/Post';
+export * from './Image/Image';

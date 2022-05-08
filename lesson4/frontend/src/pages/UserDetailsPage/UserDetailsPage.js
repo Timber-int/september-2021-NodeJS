@@ -1,12 +1,12 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { UserComment, UserPost } from '../../components';
+import css from './UserDetailsPage.module.css';
 
 const UserDetailsPage = () => {
 
     const { state } = useLocation();
 
-    console.log(state);
     const {
         firstName,
         lastName,
@@ -16,22 +16,33 @@ const UserDetailsPage = () => {
         role,
         comments,
     } = state;
+
     return (
         <div>
-            <div>FirstName: {firstName}</div>
-            <div>LastName: {lastName}</div>
-            <div>Email: {email}</div>
-            <div>Phone: {phone}</div>
-            <div>Role: {role}</div>
-            <div>
-                {
-                    posts && posts.length ? <div>Created Posts: {posts.map(post => <UserPost key={post.id} post={post}/>)}</div> : <></>
-                }
-                {
-                    comments && comments.length ? <div>Created Comments: {comments.map(comment => <UserComment key={comment.id} comment={comment}/>)}</div> : <></>
-                }
+
+            <div className={css.user_details_box}>
+                <div>FirstName: {firstName}</div>
+                <div>LastName: {lastName}</div>
+                <div>Email: {email}</div>
+                <div>Phone: {phone}</div>
+                <div>Role: {role}</div>
             </div>
 
+            <div className={css.info_container}>
+                <div className={css.post_container}>
+                    Posts:
+                    {
+                        posts && posts.length ? <>{posts.map(post => <UserPost key={post.id} post={post}/>)}</> : <></>
+                    }
+                </div>
+                <div className={css.comment_container}>
+                    Comments:
+                    {
+                        comments && comments.length ?
+                            <>{comments.map(comment => <UserComment key={comment.id} comment={comment}/>)}</> : <></>
+                    }
+                </div>
+            </div>
         </div>
     );
 };

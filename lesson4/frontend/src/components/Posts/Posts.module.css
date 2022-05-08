@@ -1,0 +1,39 @@
+.posts_container {
+    padding: 5px;
+    margin: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    height: 400px;
+    overflow: hidden;
+    overflow-y: auto;
+    border: 1px solid #39445a;
+    border-radius: 5px;
+}
+
+.posts_form_container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px;
+}
+
+.posts_form > input {
+    padding: 10px;
+    border: 2px solid #39445a;
+    margin: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.posts_form_button {
+    border-radius: 5px;
+    background: #39445a;
+    color: #ffffff;
+}
+
+.posts_form_button:hover {
+    color: #2E94E3;
+    cursor: pointer;
+}

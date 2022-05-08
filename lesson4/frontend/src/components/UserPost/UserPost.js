@@ -1,4 +1,5 @@
 import React from 'react';
+import css from './UserPost.module.css';
 
 const UserPost = ({ post }) => {
     const {
@@ -6,7 +7,7 @@ const UserPost = ({ post }) => {
         text,
     } = post;
     return (
-        <div>
+        <div className={css.user_post_box}>
             <div>Title: {title}</div>
             <div>{text}</div>
         </div>

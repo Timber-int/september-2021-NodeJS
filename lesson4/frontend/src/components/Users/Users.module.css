@@ -1,0 +1,11 @@
+.user_container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    border: 1px solid #39445a;
+    height: 160px;
+    overflow: hidden;
+    overflow-y: auto;
+    margin-top: 10px;
+    padding: 10px;
+}

@@ -1,4 +1,5 @@
 import React from 'react';
+import css from './UserComment.module.css';
 
 const UserComment = ({ comment }) => {
 
@@ -9,9 +10,9 @@ const UserComment = ({ comment }) => {
     } = comment;
     return (
         <div>
-            <div>
-                <span>👍 {like}</span>
-                <span>👎 {dislike}</span>
+            <div className={css.action_type}>
+                <span className={like > 0 ? css.action_like : css.action_type}>👍  {like}  </span>
+                <span className={like > 0 ? css.action_dislike : css.action_type}>👎  {dislike}  </span>
                 <div>
                     {text}
                 </div>

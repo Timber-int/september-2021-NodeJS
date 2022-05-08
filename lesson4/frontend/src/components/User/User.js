@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import css from './User.module.css';
 
 const User = ({
     user,
@@ -11,8 +12,9 @@ const User = ({
         lastName,
     } = user;
     return (
-        <div>
-            <div>{index + 1}) {firstName} {lastName}<span><Link to={'users/' + id} state={user}><button>Information</button></Link></span></div>
+        <div className={css.user_box}>
+            <div>{index + 1}) {firstName} {lastName}</div>
+            <div><Link to={'users/' + id} state={user}><button>Information</button></Link></div>
         </div>
     );
 };
