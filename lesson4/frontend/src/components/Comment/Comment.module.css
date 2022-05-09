@@ -1,0 +1,13 @@
+.action_type {
+    color: orange;
+    font-size: 18px;
+    width: 100%;
+}
+
+.action_like {
+    color: green;
+}
+
+.action_dislike {
+    color: red;
+}

@@ -1,0 +1,22 @@
+.comment_form_button {
+    background: #39445a;
+    color: #ffffff;
+    font-size: 12px;
+    padding: 2px;
+    border: 1px solid #39445a;
+    margin: 2px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.comment_form_button:hover {
+    color: #2E94E3;
+    cursor: pointer;
+}
+
+.comment_form_text {
+    padding: 5px;
+    border: 1px solid #39445a;
+    margin: 2px;
+    border-radius: 10px;
+}

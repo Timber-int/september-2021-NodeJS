@@ -4,13 +4,14 @@ import { CONSTANTS } from '../constants';
 
 export const createPost = createAsyncThunk(
     'postSlice/createPost',
-    async (post, {
+    async ({ post }, {
         dispatch,
         rejectWithValue
     }) => {
         try {
-            await postService.create(post);
+            const createdPost = await postService.create(post);
 
+            return createdPost;
         } catch (e) {
             return rejectWithValue(e.message);
         }
@@ -37,22 +38,36 @@ const postSlice = createSlice({
     name: 'postSlice',
     initialState: {
         posts: [],
-        error: null,
+        errors: null,
         status: null,
+        post: null,
     },
     extraReducers: {
         [getAllPosts.pending]: (state, action) => {
             state.status = CONSTANTS.LOADING;
-            state.error = null;
+            state.errors = null;
         },
         [getAllPosts.fulfilled]: (state, action) => {
             state.status = CONSTANTS.RESOLVED;
             state.posts = action.payload;
-            state.error = null;
+            state.errors = null;
         },
         [getAllPosts.rejected]: (state, action) => {
             state.status = CONSTANTS.REJECTED;
-            state.error = action.payload;
+            state.errors = action.payload;
+        },
+        [createPost.pending]: (state, action) => {
+            state.status = CONSTANTS.LOADING;
+            state.errors = null;
+        },
+        [createPost.fulfilled]: (state, action) => {
+            state.status = CONSTANTS.RESOLVED;
+            state.post = action.payload;
+            state.errors = null;
+        },
+        [createPost.rejected]: (state, action) => {
+            state.status = CONSTANTS.REJECTED;
+            state.errors = action.payload;
         }
     }
 });

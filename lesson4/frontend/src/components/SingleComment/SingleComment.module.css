@@ -1,0 +1,28 @@
+.action_type {
+    color: orange;
+    font-size: 18px;
+    width: 100%;
+}
+
+.action_like {
+    color: green;
+    cursor: pointer;
+}
+
+.action_dislike {
+    color: red;
+    cursor: pointer;
+}
+
+.single_comment_box {
+    width: 20%;
+    height: 120px;
+    border-radius: 10px;
+    border: 1px solid #39445a;
+    margin: 10px;
+    font-size: 18px;
+}
+
+.action_span {
+    cursor: pointer;
+}

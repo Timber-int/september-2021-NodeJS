@@ -38,7 +38,7 @@ class PostRepository extends Repository<Post> implements IPostRepository {
     public async getAllPosts(): Promise<IPost[]> {
         const posts = await getManager()
             .getRepository(Post)
-            .find();
+            .find({ relations: ['comments'] });
         return posts;
     }
 

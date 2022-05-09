@@ -8,9 +8,5 @@ export const urls = {
     registration: '/registration',
     auth: '/auth',
     login: '/login',
-    cats: 'cats',
-    cars: 'cars',
-    dog: 'dogs',
-    girls: 'girls',
-    notebook: 'notebook',
+    action: '/action',
 };

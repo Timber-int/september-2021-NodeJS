@@ -7,3 +7,7 @@ export * from './RegistrationForm/RegistrationForm';
 export * from './Posts/Posts';
 export * from './Post/Post';
 export * from './Image/Image';
+export * from './FormPostCreate/FormPostCreate';
+export * from './Comment/Comment';
+export * from './FormCommentCreate/FormCommentCreate';
+export * from './SingleComment/SingleComment';

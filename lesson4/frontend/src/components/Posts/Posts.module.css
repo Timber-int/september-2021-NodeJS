@@ -37,3 +37,14 @@
     color: #2E94E3;
     cursor: pointer;
 }
+
+.post_create_form {
+    padding: 5px;
+    margin: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    border-radius: 5px;
+    color: #39445a;
+    font-size: 18px;
+}

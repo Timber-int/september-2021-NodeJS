@@ -17,6 +17,4 @@ export const checkIsPostBodyValidate = Joi.object({
             'string.empty': '"text" Can not be empty',
             'string.pattern.base': 'Enter only letter min 3 max 250',
         }),
-    userId: Joi.number()
-        .required(),
 });

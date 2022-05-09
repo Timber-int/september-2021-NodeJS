@@ -1,12 +1,13 @@
 import React from 'react';
-import css from './UserComment.module.css';
+import css from '../UserComment/UserComment.module.css';
 
-const UserComment = ({
+const Comment = ({
     comment,
     index
 }) => {
 
     const {
+        id,
         text,
         like,
         dislike,
@@ -18,11 +19,11 @@ const UserComment = ({
                 <span className={like > 0 ? css.action_like : css.action_type}>👍 {like}  </span>
                 <span className={like > 0 ? css.action_dislike : css.action_type}>👎 {dislike}  </span>
                 <div>
-                    {index+1}) {text}
+                    {index + 1}) {text}
                 </div>
             </div>
         </div>
     );
 };
 
-export { UserComment };
+export { Comment };

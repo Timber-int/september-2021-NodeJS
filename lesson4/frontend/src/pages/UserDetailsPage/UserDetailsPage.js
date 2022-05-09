@@ -39,7 +39,7 @@ const UserDetailsPage = () => {
                     Comments:
                     {
                         comments && comments.length ?
-                            <>{comments.map(comment => <UserComment key={comment.id} comment={comment}/>)}</> : <></>
+                            <>{comments.map((comment, index) => <UserComment key={comment.id} index={index} comment={comment}/>)}</> : <></>
                     }
                 </div>
             </div>
